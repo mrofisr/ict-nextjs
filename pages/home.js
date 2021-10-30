@@ -27,7 +27,7 @@ export async function getStaticProps(context) {
   if (user == null) {
     return {
       redirect: {
-        destination: "/home",
+        destination: "/",
         permanent: false,
       },
     };
