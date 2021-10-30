@@ -1,8 +1,8 @@
 // Import the functions you need from the SDKs you need
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -16,13 +16,17 @@ const firebaseConfig = {
   messagingSenderId: "396664855565",
   appId: "1:396664855565:web:d83c46fad732ca70308944",
 };
-firebase.initializeApp(firebaseConfig);
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+} else {
+  firebase.app(); // if already initialized, use that one
+}
 // Configure FirebaseUI.
 const uiConfig = {
   // Popup signin flow rather than redirect flow.
   signInFlow: "popup",
   // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
-  signInSuccessUrl: "/signedIn",
+  signInSuccessUrl: "/home",
   // We will display Google and Facebook as auth providers.
   signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
 };
@@ -32,8 +36,6 @@ const uiConfig = {
 export default function Home() {
   return (
     <div>
-      <h1>My App</h1>
-      <p>Please sign-in:</p>
       <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
     </div>
   );
