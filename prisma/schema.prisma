@@ -1,0 +1,114 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = process.env.DATABASE_URL
+}
+
+model admin {
+  id_admin  Int         @id @default(autoincrement())
+  nama      String      @db.VarChar(100)
+  email     String      @db.VarChar(100)
+  password  String      @db.VarChar(100)
+  faq_admin faq_admin[]
+}
+
+model detail_tempat_penitipan {
+  id_detail_tempat_penitipan Int                  @id @default(autoincrement())
+  foto_tempat_penitipan      String               @db.VarChar(255)
+  nama_tempat_penitipan      String               @db.VarChar(100)
+  fasilitan_tempat_penitipan String               @db.VarChar(150)
+  info_tambahan              String               @db.VarChar(255)
+  alamat                     String               @db.VarChar(255)
+  kota                       String               @db.VarChar(100)
+  id_user_tempat_penitipan   Int
+  table_user_penitipan       table_user_penitipan @relation(fields: [id_detail_tempat_penitipan], references: [id_user_penitipan], onDelete: Cascade, map: "detail_tempat_penitipan_ibfk_1")
+
+  @@index([id_user_tempat_penitipan], map: "id_user_tempat_penitipan")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model detail_user {
+  id_detail_user      Int
+  no_ktp              Int
+  alamat              String                  @db.VarChar(255)
+  tanggal_lahir       DateTime                @db.Date
+  url_foto            String                  @db.VarChar(100)
+  status_akun         detail_user_status_akun
+  url_foto_wajah      String                  @db.VarChar(100)
+  url_foto_selfie_ktp String                  @db.VarChar(100)
+  table_user          table_user              @relation(fields: [id_detail_user], references: [id_user], onDelete: Cascade, map: "detail_user_ibfk_1")
+
+  @@index([id_detail_user], map: "id_detail_user")
+  @@ignore
+}
+
+model faq_admin {
+  id_faq     Int    @id @default(autoincrement())
+  id_admin   Int
+  pertanyaan String @db.VarChar(255)
+  jawaban    String @db.VarChar(255)
+  admin      admin  @relation(fields: [id_admin], references: [id_admin], onDelete: Cascade, map: "faq_admin_ibfk_1")
+
+  @@index([id_admin], map: "id_admin")
+}
+
+model table_user {
+  id_user     Int           @id @default(autoincrement())
+  nama        String        @db.VarChar(100)
+  email       String        @db.VarChar(100)
+  detail_user detail_user[] @ignore
+  transaksi   transaksi[]
+}
+
+model table_user_penitipan {
+  id_user_penitipan       Int                      @id @default(autoincrement())
+  nama                    String                   @db.VarChar(100)
+  email                   String                   @db.VarChar(100)
+  detail_tempat_penitipan detail_tempat_penitipan?
+  transaksi               transaksi[]
+}
+
+model transaksi {
+  id_transaksi         Int                           @id @default(autoincrement())
+  nama_hewan           String                        @db.VarChar(100)
+  jenis_hewan          transaksi_jenis_hewan
+  jenis_kelamin_hewan  transaksi_jenis_kelamin_hewan
+  umur                 Int
+  tanggal_penitipan    DateTime                      @db.Date
+  tanggal_pengembalian DateTime                      @db.Date
+  info_tambahan        String                        @db.VarChar(255)
+  status_penitipan     transaksi_status_penitipan
+  id_user              Int
+  id_tempat_penitipan  Int
+  table_user_penitipan table_user_penitipan          @relation(fields: [id_tempat_penitipan], references: [id_user_penitipan], onDelete: Cascade, map: "transaksi_ibfk_2")
+  table_user           table_user                    @relation(fields: [id_user], references: [id_user], onDelete: Cascade, map: "transaksi_ibfk_1")
+
+  @@index([id_tempat_penitipan], map: "id_tempat_penitipan")
+  @@index([id_user], map: "id_user")
+}
+
+enum detail_user_status_akun {
+  terverifikasi
+  belum_terverifikasi
+}
+
+enum transaksi_jenis_hewan {
+  anjing
+  kucing
+}
+
+enum transaksi_jenis_kelamin_hewan {
+  jantan
+  betina
+}
+
+enum transaksi_status_penitipan {
+  pending
+  approve
+  cancled
+  process
+  complete
+}
