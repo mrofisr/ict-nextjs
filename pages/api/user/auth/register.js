@@ -1,5 +1,7 @@
 import { succes, error } from "@/utils/res";
 import getRequest from "@/libs/get-req";
+import bcrypt from "bcryptjs";
+import prisma from "@/libs/prisma";
 
 
 export const config = {
@@ -8,37 +10,114 @@ export const config = {
     }
 }
 
-export default async function hander (req, res) {
+export default async function handler (req, res) {
+    if (req.method !== 'POST') return res.status(405).json({
+        ...error,
+        error_status: 405,
+        message: `Method ${req.method} not allowed`
+    });
+    const {role} = req.query;
+    if (!role) return res.status(404).json({
+        ...error,
+        error_status: 404,
+        message: "Must be send request query"
+    });
+
     const {fields, files} = await getRequest(req, './public/user')
-
-    console.log(fields);
-    console.log(files);
-    const path = files.wajah.filepath.replace('C:\\Users\\user\\OneDrive\\ict-nextjs-1\\','');
-    const pathWajahKtp = files.wajah_ktp.filepath.replace('C:\\Users\\user\\OneDrive\\ict-nextjs-1\\','')
-    console.log(path);
-    console.log(pathWajahKtp);
-
-
-
-    // const form = formidable({
-    //     keepExtensions: true, 
-    //     uploadDir: "./public/cover",
-    // });
-    
-    // form.parse(req , (err, fields, files) => {
-    //     if (err) console.log(err);
-    //     console.log(fields);
-
-    //     return res.status(200).json({
-    //         ...succes,
-    //         message: "Register user succesfully",
-    //     })
-
-    // });
-    
-    res.status(200).json({
-        ...succes,
-        message: "Register user succesfully",
+    const {email, password, nik, alamat, tanggal_lahir, jenis_kelamin, nama} = fields;
+    const {foto_wajah, foto_wajah_ktp} = files;
+    if (!email || !password || !nik || !alamat || !tanggal_lahir || !jenis_kelamin || !foto_wajah || !foto_wajah_ktp || !nama) return res.status(400).json({
+        ...error,
+        message: "Request body is not valid / some missing"
     })
+
+    // * check available email
+    const checkEmailUser = await prisma.table_user.findMany({
+        where: {email}
+    });
+    const checkEmailUserPenitipan = await prisma.table_user_penitipan.findMany({
+        where: {email}
+    });
+    if (checkEmailUser.length > 0 || checkEmailUserPenitipan.length > 0) return res.status(406).json({
+        ...error,
+        error_status: 406,
+        message: "Email has already used for other account"
+    });
+
+    // * generate password
+    const salt = bcrypt.genSaltSync(10);
+	const passwordHash = bcrypt.hashSync(password, salt);
+
+    switch (role) {
+        case "user":
+            const addUser = await prisma.table_user.create({
+                data: {
+                    nama: nama,
+                    email: email,
+                    password: passwordHash,
+                    detail_user: {
+                        create: [
+                            {
+                                no_ktp: nik,
+                                alamat: alamat,
+                                tanggal_lahir: `${tanggal_lahir}T14:21:00+02:00`,
+                                url_foto_selfie_ktp: foto_wajah_ktp.path,
+                                status_akun: 'belum_terverifikasi',
+                                jenis_kelamin: jenis_kelamin,
+                                url_foto_wajah: foto_wajah.path
+                            }
+                        ]
+                    }
+                }
+            });
+            const addedUser = await prisma.table_user.findFirst({
+                where: {id_user: addUser.id_user},
+                include: {detail_user: true}
+            });
+            // console.log(addedUser);
+            return res.status(200).json({
+                ...succes,
+                message: "Register user succesfully",
+                data: addedUser
+            });
+            
+        case "user_penitipan":
+            const addUserPenitipan = await prisma.table_user_penitipan.create({
+                data: {
+                    nama: nama,
+                    email: email,
+                    password: passwordHash,
+                    detail_user_penitipan: {
+                        create: [
+                            {
+                                no_ktp: nik,
+                                alamat: alamat,
+                                tanggal_lahir: `${tanggal_lahir}T14:21:00+02:00`,
+                                url_foto_selfie_ktp: foto_wajah_ktp.path,
+                                status_akun: 'belum_terverifikasi',
+                                jenis_kelamin: jenis_kelamin,
+                                url_foto_wajah: foto_wajah.path
+                            }
+                        ]
+                    }
+                }
+            });
+            const addedUserPenitipan = await prisma.table_user_penitipan.findFirst({
+                where: {id_user: addUserPenitipan.id_user},
+                include: {detail_user_penitipan: true}
+            });
+            return res.status(200).json({
+                ...succes,
+                message: "Register user penitipan succesfully",
+                data: addedUserPenitipan
+            });
+
+        default:
+            return res.status(400).json({
+                ...error,
+                message: `Req query ${req.query} not valid`
+            })
+
+    }
 }
 // {filepath, originalFilename, newFilename} qq
