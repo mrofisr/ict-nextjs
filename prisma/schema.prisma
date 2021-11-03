@@ -24,25 +24,22 @@ model detail_tempat_penitipan {
   alamat                     String               @db.VarChar(255)
   kota                       String               @db.VarChar(100)
   id_user_tempat_penitipan   Int
-  table_user_penitipan       table_user_penitipan @relation(fields: [id_detail_tempat_penitipan], references: [id_user_penitipan], onDelete: Cascade, map: "detail_tempat_penitipan_ibfk_1")
-
+  table_user_penitipan       table_user_penitipan @relation(fields: [id_user_tempat_penitipan], references: [id_user_penitipan], onDelete: Cascade, map: "detail_tempat_penitipan_ibfk_1")
   @@index([id_user_tempat_penitipan], map: "id_user_tempat_penitipan")
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model detail_user {
+  id                  Int                       @id @default(autoincrement())
   id_detail_user      Int
-  no_ktp              Int
-  alamat              String                  @db.VarChar(255)
-  tanggal_lahir       DateTime                @db.Date
-  url_foto            String                  @db.VarChar(100)
+  no_ktp              String                    @db.VarChar(16)
+  alamat              String                    @db.VarChar(255)
+  tanggal_lahir       DateTime                  @db.Date
   status_akun         detail_user_status_akun
-  url_foto_wajah      String                  @db.VarChar(100)
-  url_foto_selfie_ktp String                  @db.VarChar(100)
-  table_user          table_user              @relation(fields: [id_detail_user], references: [id_user], onDelete: Cascade, map: "detail_user_ibfk_1")
-
+  url_foto_wajah      String                    @db.VarChar(100)
+  url_foto_selfie_ktp String                    @db.VarChar(100)
+  jenis_kelamin       detail_user_jenis_kelamin
+  table_user          table_user                @relation(fields: [id_detail_user], references: [id_user], onDelete: Cascade, map: "detail_user_ibfk_1")
   @@index([id_detail_user], map: "id_detail_user")
-  @@ignore
 }
 
 model faq_admin {
@@ -51,7 +48,6 @@ model faq_admin {
   pertanyaan String @db.VarChar(255)
   jawaban    String @db.VarChar(255)
   admin      admin  @relation(fields: [id_admin], references: [id_admin], onDelete: Cascade, map: "faq_admin_ibfk_1")
-
   @@index([id_admin], map: "id_admin")
 }
 
@@ -59,15 +55,18 @@ model table_user {
   id_user     Int           @id @default(autoincrement())
   nama        String        @db.VarChar(100)
   email       String        @db.VarChar(100)
-  detail_user detail_user[] @ignore
+  password    String        @db.VarChar(100)
+  detail_user detail_user[] 
   transaksi   transaksi[]
 }
 
 model table_user_penitipan {
-  id_user_penitipan       Int                      @id @default(autoincrement())
-  nama                    String                   @db.VarChar(100)
-  email                   String                   @db.VarChar(100)
-  detail_tempat_penitipan detail_tempat_penitipan?
+  id_user_penitipan       Int                       @id @default(autoincrement())
+  nama                    String                    @db.VarChar(100)
+  email                   String                    @db.VarChar(100)
+  password                String                    @db.VarChar(100)
+  detail_tempat_penitipan detail_tempat_penitipan[]
+  detail_user_penitipan   detail_user_penitipan[]   
   transaksi               transaksi[]
 }
 
@@ -85,12 +84,28 @@ model transaksi {
   id_tempat_penitipan  Int
   table_user_penitipan table_user_penitipan          @relation(fields: [id_tempat_penitipan], references: [id_user_penitipan], onDelete: Cascade, map: "transaksi_ibfk_2")
   table_user           table_user                    @relation(fields: [id_user], references: [id_user], onDelete: Cascade, map: "transaksi_ibfk_1")
-
   @@index([id_tempat_penitipan], map: "id_tempat_penitipan")
-  @@index([id_user],  EMPTY_ENUM_VALUE @map("")
-  EMPTY_ENUM_VALUE @map("")
-  EMPTY_ENUM_VALUE @map("")
-  EMP}
+  @@index([id_user], map: "id_user")
+}
+
+model detail_user_penitipan {
+  id                       Int                                 @id @default(autoincrement())
+  id_detail_user_penitipan Int
+  no_ktp                   String                              @db.VarChar(16)
+  alamat                   String                              @db.VarChar(255)
+  tanggal_lahir            DateTime                            @db.Date
+  status_akun              detail_user_penitipan_status_akun
+  url_foto_wajah           String                              @db.VarChar(100)
+  url_foto_selfie_ktp      String                              @db.VarChar(100)
+  jenis_kelamin            detail_user_penitipan_jenis_kelamin
+  table_user_penitipan     table_user_penitipan                @relation(fields: [id_detail_user_penitipan], references: [id_user_penitipan], onDelete: Cascade, map: "detail_user_penitipan_ibfk_1")
+  @@index([id_detail_user_penitipan], map: "id_detail_user_penitipan")
+}
+
+enum detail_user_status_akun {
+  terverifikasi
+  belum_terverifikasi
+}
 
 enum transaksi_jenis_hewan {
   anjing
@@ -108,4 +123,19 @@ enum transaksi_status_penitipan {
   cancled
   process
   complete
+}
+
+enum detail_user_jenis_kelamin {
+  laki_laki
+  perempuan
+}
+
+enum detail_user_penitipan_status_akun {
+  terverifikasi
+  belum_terverifikasi
+}
+
+enum detail_user_penitipan_jenis_kelamin {
+  laki_laki
+  perempuan
 }
