@@ -52,7 +52,7 @@ export default async function handler(req, res) {
 			// * generate token
 			const newToken = jwt.sign(
 				{
-					id: checkEmail.id_admin,
+					id: checkEmail.id_user,
 					nama: checkEmail.nama,
 					email: checkEmail.email,
 					role: "user",
@@ -93,10 +93,11 @@ export default async function handler(req, res) {
 					message: "Wrong password",
 				});
 
+			
 			// * generate token
 			const newTokenPenitipan = jwt.sign(
 				{
-					id: checkEmailPenitipan.id_admin,
+					id: checkEmailPenitipan.id_user_penitipan,
 					nama: checkEmailPenitipan.nama,
 					email: checkEmailPenitipan.email,
 					role: "user_penitipan",
@@ -106,6 +107,7 @@ export default async function handler(req, res) {
 					expiresIn: "7d",
 				}
 			);
+
 			return res.status(200).json({
 				...succes,
 				message: "Login user succesfully",
