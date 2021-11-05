@@ -18,9 +18,11 @@ model admin {
 model detail_tempat_penitipan {
   id_detail_tempat_penitipan Int                  @id @default(autoincrement())
   foto_tempat_penitipan      String               @db.VarChar(255)
+  foto_tempat_penitipan_2    String               @db.VarChar(255)
+  foto_tempat_penitipan_3    String               @db.VarChar(255)
   nama_tempat_penitipan      String               @db.VarChar(100)
-  fasilitan_tempat_penitipan String               @db.VarChar(150)
-  info_tambahan              String               @db.VarChar(255)
+  harga                      String               @db.VarChar(50)
+  deskripsi                  String               @db.Text
   alamat                     String               @db.VarChar(255)
   kota                       String               @db.VarChar(100)
   id_user_tempat_penitipan   Int
@@ -92,6 +94,7 @@ model detail_user_penitipan {
   id                       Int                                 @id @default(autoincrement())
   id_detail_user_penitipan Int
   no_ktp                   String                              @db.VarChar(16)
+  no_telp                  String                              @db.VarChar(15)
   alamat                   String                              @db.VarChar(255)
   tanggal_lahir            DateTime                            @db.Date
   status_akun              detail_user_penitipan_status_akun
