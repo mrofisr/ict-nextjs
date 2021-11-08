@@ -17,7 +17,7 @@ export default async function handler(req, res) {
 			message: `Method ${req.method} not allowed`,
 		});
 	const { role } = req.query;
-	if (!role)
+	if (!role)	
 		return res.status(404).json({
 			...error,
 			error_status: 404,
@@ -98,7 +98,6 @@ export default async function handler(req, res) {
 				where: { id_user: addUser.id_user },
 				include: { detail_user: true },
 			});
-			// console.log(addedUser);
 			return res.status(200).json({
 				...succes,
 				message: "Register user succesfully",
