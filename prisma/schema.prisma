@@ -111,21 +111,19 @@ enum detail_user_status_akun {
 }
 
 enum transaksi_jenis_hewan {
-  anjing
-  kucing
+  Anjing
+  Kucing
 }
 
 enum transaksi_jenis_kelamin_hewan {
-  jantan
-  betina
+  Jantan
+  Betina
 }
 
 enum transaksi_status_penitipan {
-  pending
-  approve
-  cancled
-  process
-  complete
+  Accepted
+  Pending
+  Decline
 }
 
 enum detail_user_jenis_kelamin {
