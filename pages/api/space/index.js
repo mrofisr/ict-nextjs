@@ -19,9 +19,9 @@ export default async function handler(req, res) {
 					kota: true,
 					foto_tempat_penitipan: true,
 					id_user_tempat_penitipan: true,
+					id_detail_tempat_penitipan: true
 				},
 			});
-			console.log(selectSpace);
 			return res.status(200).json({
 				...succes,
 				message: "Select all data succesfully",
@@ -59,7 +59,6 @@ export default async function handler(req, res) {
 					foto_tempat_penitipan_3: foto_3.path,
 				},
 			});
-			console.log(addSpace);
 			return res.status(200).json({
 				...succes,
 				message: "Create detail tempat penitipan succesfully",
