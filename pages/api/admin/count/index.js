@@ -13,22 +13,16 @@ export default async function handler(req, res) {
 	const countAdmin = await prisma.admin.count();
 	const countUser = await prisma.table_user.count();
 	const countUserPenitipan = await prisma.table_user_penitipan.count();
-	const countPendingStatus = await prisma.transaksi.count({
-		where: { status_penitipan: "pending" },
+	const countTransaksi = await prisma.transaksi.count();
+	const countTransaksiAccepted = await prisma.transaksi.count({
+		where: { status_penitipan: "Accepted" },
 	});
-	const countApproveStatus = await prisma.transaksi.count({
-		where: { status_penitipan: "approve" },
+	const countTransaksiDecline = await prisma.transaksi.count({
+		where: { status_penitipan: "Decline" },
 	});
-	const countCancledStatus = await prisma.transaksi.count({
-		where: { status_penitipan: "cancled" },
+	const countTransaksiPending = await prisma.transaksi.count({
+		where: { status_penitipan: "Pending" },
 	});
-	const countProccesStatus = await prisma.transaksi.count({
-		where: { status_penitipan: "process" },
-	});
-	const countCompleteStatus = await prisma.transaksi.count({
-		where: { status_penitipan: "complete" },
-	});
-
 	res.status(200).json({
 		...succes,
 		message: "Count all data succesfully",
@@ -36,11 +30,10 @@ export default async function handler(req, res) {
 			admin: countAdmin,
 			user: countUser,
 			userPenitipan: countUserPenitipan,
-			pending: countPendingStatus,
-			approve: countApproveStatus,
-			cancled: countCancledStatus,
-			process: countProccesStatus,
-			complete: countCompleteStatus,
+			transaksi: countTransaksi,
+			transaksiAccepted: countTransaksiAccepted,
+			transaksiDecline: countTransaksiDecline,
+			transaksiPending: countTransaksiPending,
 		},
 	});
 }
