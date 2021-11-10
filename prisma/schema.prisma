@@ -16,15 +16,14 @@ model admin {
 }
 
 model detail_tempat_penitipan {
-  id_detail_tempat_penitipan Int                  @id @default(autoincrement())
-  foto_tempat_penitipan      String               @db.VarChar(255)
-  foto_tempat_penitipan_2    String               @db.VarChar(255)
-  foto_tempat_penitipan_3    String               @db.VarChar(255)
-  nama_tempat_penitipan      String               @db.VarChar(100)
-  harga                      String               @db.VarChar(50)
-  deskripsi                  String               @db.Text
-  alamat                     String               @db.VarChar(255)
-  kota                       String               @db.VarChar(100)
+  id_detail_tempat_penitipan Int                                 @id @default(autoincrement())
+  foto_tempat_penitipan      String                              @db.VarChar(255)
+  nama_tempat_penitipan      String                              @db.VarChar(100)
+  harga                      String                              @db.VarChar(50)
+  jenis_hewan                String                              @db.VarChar(255)
+  deskripsi                  String                              @db.Text
+  alamat                     String                              @db.VarChar(255)
+  kota                       String                              @db.VarChar(100)
   id_user_tempat_penitipan   Int
   table_user_penitipan       table_user_penitipan @relation(fields: [id_user_tempat_penitipan], references: [id_user_penitipan], onDelete: Cascade, map: "detail_tempat_penitipan_ibfk_1")
   @@index([id_user_tempat_penitipan], map: "id_user_tempat_penitipan")
