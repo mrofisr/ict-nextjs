@@ -15,31 +15,16 @@ export default async function handler(req, res) {
 			error_status: 404,
 			message: "Request query must be send",
 		});
-	const { nama } = await prisma.table_user_penitipan.findFirst({
-		where: { id_user_penitipan: parseInt(id) },
-		select: {
-			nama: true,
-		},
-	});
-	const getDetailPenitipan = await prisma.detail_tempat_penitipan.findFirst({
-		where: { id_user_tempat_penitipan: parseInt(id) },
-		select: {
-			id_user_tempat_penitipan: true,
-			nama_tempat_penitipan: true,
-			kota: true,
-			harga: true,
-			deskripsi: true,
-			foto_tempat_penitipan: true,
-			foto_tempat_penitipan_2: true,
-			foto_tempat_penitipan_3: true,
-		},
+	const {harga, table_user_penitipan: {nama}, ...exception} = await prisma.detail_tempat_penitipan.findFirst({
+		where: { id_detail_tempat_penitipan: parseInt(id) },
+		include: {table_user_penitipan: true}
 	});
 	res.status(200).json({
 		...succes,
 		message: "Get detail space succesfully",
 		data: {
 			nama,
-			...getDetailPenitipan,
-		},
+			...exception
+		}
 	});
 }
