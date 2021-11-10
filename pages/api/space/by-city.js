@@ -19,6 +19,7 @@ export default async function handler(req, res) {
 		where: { kota: city },
 		select: {
 			id_user_tempat_penitipan: true,
+			id_detail_tempat_penitipan: true,
 			nama_tempat_penitipan: true,
 			harga: true,
 			kota: true,

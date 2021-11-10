@@ -19,7 +19,8 @@ export default async function handler(req, res) {
 					kota: true,
 					foto_tempat_penitipan: true,
 					id_user_tempat_penitipan: true,
-					id_detail_tempat_penitipan: true
+					id_detail_tempat_penitipan: true,
+					jenis_hewan: true
 				},
 			});
 			return res.status(200).json({
@@ -30,7 +31,7 @@ export default async function handler(req, res) {
 		case "POST":
 			const auth = await authApi(req, res, "user_penitipan");
 			const { fields, files } = await getRequest(req, "./public/space");
-			const { nama_penitipan, alamat, kota, harga, deskripsi } = fields;
+			const { nama_penitipan, alamat, kota, harga, deskripsi, jenis_hewan } = fields;
 			const { foto_1, foto_2, foto_3 } = files;
 			if (
 				!nama_penitipan ||
@@ -40,7 +41,8 @@ export default async function handler(req, res) {
 				!deskripsi ||
 				!foto_1 ||
 				!foto_2 ||
-				!foto_3
+				!foto_3 ||
+				!jenis_hewan
 			)
 				return res.status(400).json({
 					...error,
@@ -54,9 +56,8 @@ export default async function handler(req, res) {
 					kota: kota,
 					harga: harga,
 					deskripsi: deskripsi,
-					foto_tempat_penitipan: foto_1.path,
-					foto_tempat_penitipan_2: foto_2.path,
-					foto_tempat_penitipan_3: foto_3.path,
+					foto_tempat_penitipan: `${foto_1.path},${foto_2.path},${foto_3.path}`,
+					jenis_hewan: jenis_hewan
 				},
 			});
 			return res.status(200).json({

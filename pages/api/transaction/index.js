@@ -1,6 +1,5 @@
 import { succes, error } from "@/utils/res";
 import prisma from "@/libs/prisma";
-import getRequest from "@/libs/get-req";
 import { authApi, defaultAuthApi } from "@/middlewares/authApi";
 
 export default async function handler(req, res) {
@@ -9,46 +8,98 @@ export default async function handler(req, res) {
 			const auth = await defaultAuthApi(req, res);
 			switch (auth.role) {
 				case "user":
-					const userTransaction = await prisma.transaksi.findMany({
-						where: { id_user: auth.id },
-						include: {
-							table_user: true,
-							table_user_penitipan: {
+					const {jenis} = req.query;
+					switch(jenis) {
+						case "kucing":
+							const transactionKucing = await prisma.transaksi.findMany({
+								where: { id_user: auth.id, jenis_hewan: "Kucing" },
 								include: {
-									detail_user_penitipan: true,
+									table_user: true,
+									table_user_penitipan: {
+										include: {
+											detail_user_penitipan: true,
+										},
+									},
 								},
-							},
-						},
-					});
-					const filterTransaction = userTransaction.map(
-						(transaction) => {
-							const {
-								id_transaksi,
-								nama_hewan,
-								jenis_hewan,
-								jenis_kelamin_hewan,
-								status_penitipan,
-								table_user: { nama },
-							} = transaction;
-							const { no_telp } =
-								transaction.table_user_penitipan
-									.detail_user_penitipan[0];
-							return {
-								id_transaksi,
-								nama_penitip: nama,
-								nama_hewan,
-								jenis_hewan,
-								jenis_kelamin_hewan,
-								status_penitipan,
-								no_telp_tempat_penitipan: no_telp,
-							};
-						}
-					);
-					return res.status(200).json({
-						...succes,
-						message: "Get all transaction for user succes",
-						data: filterTransaction,
-					});
+							});
+							
+							const filterTransactionKucing = transactionKucing.map(
+								(transaction) => {
+									const {
+										id_transaksi,
+										nama_hewan,
+										jenis_hewan,
+										jenis_kelamin_hewan,
+										status_penitipan,
+										table_user: { nama },
+									} = transaction;
+									const { no_telp } =
+										transaction.table_user_penitipan
+											.detail_user_penitipan[0];
+									return {
+										id_transaksi,
+										nama_penitip: nama,
+										nama_hewan,
+										jenis_hewan,
+										jenis_kelamin_hewan,
+										status_penitipan,
+										no_telp_tempat_penitipan: no_telp,
+									};
+								}
+							);
+							return res.status(200).json({
+								...succes,
+								message: "Get all transaction kucing for user succes",
+								data: filterTransactionKucing,
+							});
+						case "anjing":
+							const transactionAnjing = await prisma.transaksi.findMany({
+								where: { id_user: auth.id, jenis_hewan: "Anjing" },
+								include: {
+									table_user: true,
+									table_user_penitipan: {
+										include: {
+											detail_user_penitipan: true,
+										},
+									},
+								},
+							});
+							const filterTransaction = transactionAnjing.map(
+								(transaction) => {
+									const {
+										id_transaksi,
+										nama_hewan,
+										jenis_hewan,
+										jenis_kelamin_hewan,
+										status_penitipan,
+										table_user: { nama },
+									} = transaction;
+									const { no_telp } =
+										transaction.table_user_penitipan
+											.detail_user_penitipan[0];
+									return {
+										id_transaksi,
+										nama_penitip: nama,
+										nama_hewan,
+										jenis_hewan,
+										jenis_kelamin_hewan,
+										status_penitipan,
+										no_telp_tempat_penitipan: no_telp,
+									};
+								}
+							);
+							return res.status(200).json({
+								...succes,
+								message: "Get all transaction anjing for user succes",
+								data: filterTransaction,
+							});
+						default:
+							return res.status(400).json({
+								...error,
+								message: "Jenis hewan not valid"
+							})
+					}
+				
 				case "user_penitipan":
 					const userPenitipanTransaction =
 						await prisma.transaksi.findMany({
