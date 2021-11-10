@@ -4,7 +4,8 @@
         "paths": {
             "@/utils/*": ["utils/*"],
             "@/libs/*": ["libs/*"],
-            "@/middlewares/*": ["middlewares/*"]
+            "@/middlewares/*": ["middlewares/*"],
+            "@/components/*": ["./components/*"]
         }
     }
 }
