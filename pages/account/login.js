@@ -1,9 +1,44 @@
 import Head from "@/components/Head";
 import Back from "@/components/Back";
 import Link from "next/link";
-
+import { useState } from "react";
+import Cookies from "js-cookie";
 
 export default function Login() {
+  const [fields, setFields] = useState({
+    email: "",
+    password: ""
+  });
+
+  async function loginUser (e) {
+    e.preventDefault();
+    const login = await fetch('/api/user/auth/login?role=user', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(fields)
+    });
+    const loginRes = await login.json();
+    if (!login.ok) return console.log(`error ${loginRes.message}`);
+    console.log(loginRes);
+    console.log(loginRes.data.token);
+    Cookies.set("user_cookie", loginRes.data.token);
+  }
+
+  async function loginUserPenitipan (e) {
+    e.preventDefault();
+    // alert("hallo ini user Penitipan")
+  }
+
+  function fieldHandler (e) {
+    const getName = e.target.getAttribute('name');
+    
+    setFields({
+      ...fields,
+      [getName]: e.target.value
+    })
+  }
   return (
     <div className="flex flex-col">
       <Head />
@@ -40,6 +75,7 @@ export default function Login() {
                       </a>
                     </span>
                     <input
+                      onChange={fieldHandler}
                       placeholder="Masukkan Email Kamu"
                       type="email"
                       name="email"
@@ -59,6 +95,7 @@ export default function Login() {
                       </a>
                     </span>
                     <input
+                      onChange={fieldHandler}
                       placeholder="Masukkan Password Kamu"
                       type="password"
                       name="password"
@@ -70,11 +107,13 @@ export default function Login() {
                   
                   {/* Button Sign */}
                   <input
+                    onClick={loginUser}
                     type="submit"
                     value="Login Sebagai Penitip"
                     className="mt-10 px-4 py-3 bg-blue-main text-white font-medium w-full cursor-pointer border-2 border-blue-main rounded-lg ease-linear duration-150 hover:text-blue-main hover:border-2 hover:bg-white"
                   ></input>
                   <input
+                    onClick={loginUserPenitipan}
                     type="submit"
                     value="Login Sebagai Tempat Penitipan"
                     className="mt-2 px-4 py-3 bg-white text-blue-main font-medium w-full cursor-pointer border-2 border-blue-main rounded-lg ease-linear duration-150 hover:text-white hover:border-2 hover:bg-blue-main"
