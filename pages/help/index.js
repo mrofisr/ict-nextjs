@@ -1,5 +1,5 @@
 import Head from "@/components/Head";
-import BarPetCare from "@/components/BarPetCare";
+import Bar from "@/components/Bar";
 
 export default function Help() {
   return (
@@ -102,7 +102,7 @@ export default function Help() {
               </div>
             </div>
 
-            <BarPetCare currentPage="help" />
+            <Bar currentPage="help" />
           </div>
         </div>
       </div>

@@ -1,8 +1,62 @@
 import Link from "next/link";
+import { useState } from "react";
 import Head from "@/components/Head";
 import Back from "@/components/Back";
 
 export default function SignUp() {
+  const [inputField, setInputField] = useState({
+    nama: "",
+    email: "",
+    password: "",
+    role: "",
+    nik: "",
+    alamat: "",
+    tanggal_lahir: "",
+    jenis_kelamin: "",
+    foto_wajah: "",
+    foto_wajah_ktp: "",
+    no_hp: "087578"
+  });
+
+  const submitForm = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    Object.entries(inputField).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+
+    const api = inputField.role === 'user_penitipan' ? "/api/user/auth/register?role=user_penitipan" : "/api/user/auth/register?role=user";
+
+    const req = await fetch(api, {
+      method: "POST",
+      headers: {},
+      body: formData
+  });
+
+  const res = await req.json();
+  console.log(res);
+    
+  };
+
+  const inputTextHandler = (e) => {
+    const getInputText = e.target.getAttribute("name");
+
+    setInputField({
+      ...inputField,
+      [getInputText]: e.target.value,
+    });
+  };
+
+  const inputImageHandler = (e) => {
+    const getInputText = e.target.getAttribute("name");
+
+    setInputField({
+      ...inputField,
+      [getInputText]: e.target.files[0],
+    });
+  };
+
   return (
     <div className="flex flex-col">
       <Head />
@@ -26,13 +80,37 @@ export default function SignUp() {
                   </p>
                 </div>
                 {/* Form  */}
-                <form method="GET" className="mt-10">
+                <form className="mt-10">
+                  {/* Masukkan nama */}
+                  <div className="relative mt-5">
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-2">
+                      <a
+                        type=""
+                        className="p-1 pl-1.5 focus:outline-none focus:shadow-outline"
+                      >
+                        <img src="/username.svg" className="my-6"></img>
+                      </a>
+                    </span>
+                    <input
+                      placeholder="Nama"
+                      type="text"
+                      name="nama"
+                      className="py-2 text-sm bg-background border-blue-secondary bg-opacity-40 text-form rounded-md pl-10  focus:outline-none focus:ring focus:border-blue-50 bg-abu h-md border-abu border-2 text-gray-500"
+                      autoComplete="off"
+                      onChange={inputTextHandler}
+                      style={{
+                        width: "100%",
+                        textIndent: "24px",
+                        height: "47px",
+                      }}
+                    ></input>
+                  </div>
                   {/* Masukkan Email */}
                   <div className="relative mt-5">
                     <span className="absolute inset-y-0 left-0 flex items-center pl-2">
                       <a
                         type=""
-                        className="p-1 focus:outline-none focus:shadow-outline"
+                        className="p-1 pl-1 focus:outline-none focus:shadow-outline"
                       >
                         <img src="/email-icon.svg" className="my-6"></img>
                       </a>
@@ -43,6 +121,7 @@ export default function SignUp() {
                       name="email"
                       className="py-2 text-sm bg-background border-blue-secondary bg-opacity-40 text-form rounded-md pl-10  focus:outline-none focus:ring focus:border-blue-50 bg-abu h-md border-abu border-2 text-gray-500"
                       autoComplete="off"
+                      onChange={inputTextHandler}
                       style={{
                         width: "100%",
                         textIndent: "24px",
@@ -63,9 +142,10 @@ export default function SignUp() {
                     <input
                       placeholder="Password"
                       type="password"
-                      name="q"
+                      name="password"
                       className="py-2 text-sm bg-background border-blue-secondary bg-opacity-40 text-form rounded-md pl-10  focus:outline-none focus:ring focus:border-blue-50 bg-abu h-md border-abu border-2 text-gray-500"
                       autoComplete="off"
+                      onChange={inputTextHandler}
                       style={{
                         width: "100%",
                         textIndent: "24px",
@@ -90,16 +170,47 @@ export default function SignUp() {
                     </span>
                     <input
                       placeholder="NIK (Nomor Induk Kependudukan)"
-                      type="number"
+                      type="text"
                       name="nik"
                       className="py-2 text-sm bg-background border-blue-secondary bg-opacity-40 text-form rounded-md pl-10  focus:outline-none focus:ring focus:border-blue-50 bg-abu h-md border-abu border-2 text-gray-500"
                       autoComplete="off"
+                      onChange={inputTextHandler}
                       style={{
                         width: "100%",
                         textIndent: "24px",
                         height: "47px",
                       }}
                     ></input>
+                  </div>
+
+                  {/* Jenis Kelamin */}
+                  <div className="relative mt-5">
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-2">
+                      <a
+                        type=""
+                        className="p-1 focus:outline-none focus:shadow-outline"
+                      >
+                        <img
+                          src="/username.svg"
+                          className="mx-1"
+                          style={{ width: "1.2em" }}
+                        ></img>
+                      </a>
+                    </span>
+
+                    <select
+                      id="sex"
+                      name="jenis_kelamin"
+                      className="select select-bordered w-full font-normal border-blue-secondary border-2 py-2 text-sm text-form bg-background bg-opacity-40 rounded-md pl-16 text-search-font focus:outline-none focus:ring focus:border-blue-50 bg-abu h-md border-abu "
+                      onChange={inputTextHandler}
+                      required
+                    >
+                      <option value="" disabled="disabled" selected="selected">
+                        Jenis Kelamin
+                      </option>
+                      <option value="laki_laki">Laki-Laki</option>
+                      <option value="perempuan">Perempuan</option>
+                    </select>
                   </div>
 
                   {/* Masukkan tanggal lahir */}
@@ -112,7 +223,6 @@ export default function SignUp() {
                         <img
                           src="/calendar.svg"
                           className="my-6"
-                          style={{}}
                         ></img>
                       </a>
                     </span>
@@ -122,8 +232,9 @@ export default function SignUp() {
                       placeholder="Tanggal Lahir"
                       onFocus={(e) => (e.currentTarget.type = "date")}
                       onBlur={(e) => (e.currentTarget.type = "text")}
+                      onChange={inputTextHandler}
                       id="birthDate"
-                      name="birthDate"
+                      name="tanggal_lahir"
                       className="py-2 text-sm bg-background text-search-font border-blue-secondary bg-opacity-40 text-form rounded-md pl-10 pr-3 focus:outline-none focus:ring focus:border-blue-50 bg-abu h-md border-abu border-2 "
                       autoComplete="off"
                       style={{
@@ -151,9 +262,10 @@ export default function SignUp() {
                     <input
                       placeholder="Alamat (Sesuai KTP)"
                       type="text"
-                      name="address"
+                      name="alamat"
                       className="py-2 text-sm text-form bg-background border-blue-secondary bg-opacity-40 rounded-md pl-10  focus:outline-none focus:ring focus:border-blue-50 bg-abu h-md border-abu border-2 text-gray-500"
                       autoComplete="off"
+                      onChange={inputTextHandler}
                       style={{
                         width: "100%",
                         textIndent: "24px",
@@ -180,6 +292,7 @@ export default function SignUp() {
                       id="role"
                       name="role"
                       className="select select-bordered w-full font-normal border-blue-secondary border-2 py-2 text-sm text-form bg-background bg-opacity-40 rounded-md pl-16 text-search-font focus:outline-none focus:ring focus:border-blue-50 bg-abu h-md border-abu "
+                      onChange={inputTextHandler}
                       required
                     >
                       <option value="" disabled="disabled" selected="selected">
@@ -199,9 +312,10 @@ export default function SignUp() {
                     <input
                       type="file"
                       id="picFace"
-                      name="picFace"
+                      name="foto_wajah"
                       accept="image/png, image/gif, image/jpeg"
-                      className="hidden "
+                      className=""
+                      onChange={inputImageHandler}
                       required
                     />
                   </label>
@@ -215,9 +329,10 @@ export default function SignUp() {
                     <input
                       type="file"
                       id="picKTP"
-                      name="picKTP"
+                      name="foto_wajah_ktp"
                       accept="image/png, image/gif, image/jpeg"
-                      className="hidden"
+                      className=""
+                      onChange={inputImageHandler}
                       required
                     />
                   </label>
@@ -226,6 +341,7 @@ export default function SignUp() {
                   <input
                     type="submit"
                     value="Registrasi"
+                    onClick={submitForm}
                     className="mt-10 px-4 py-3 bg-blue-main text-white font-medium w-full cursor-pointer border-2 border-blue-main rounded-lg ease-linear duration-150 hover:text-blue-main hover:border-2 hover:bg-white"
                   ></input>
 
