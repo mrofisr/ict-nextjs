@@ -41,7 +41,7 @@ export default function SignUp() {
                       placeholder="Email"
                       type="email"
                       name="email"
-                      className="py-2 text-sm bg-background border-blue-secondary bg-opacity-40 text-form rounded-md pl-10  focus:outline-none focus:ring focus:border-blue-50 bg-abu h-md border-abu border-2"
+                      className="py-2 text-sm bg-background border-blue-secondary bg-opacity-40 text-form rounded-md pl-10  focus:outline-none focus:ring focus:border-blue-50 bg-abu h-md border-abu border-2 text-gray-500"
                       autoComplete="off"
                       style={{
                         width: "100%",
@@ -64,7 +64,7 @@ export default function SignUp() {
                       placeholder="Password"
                       type="password"
                       name="q"
-                      className="py-2 text-sm bg-background border-blue-secondary bg-opacity-40 text-form rounded-md pl-10  focus:outline-none focus:ring focus:border-blue-50 bg-abu h-md border-abu border-2"
+                      className="py-2 text-sm bg-background border-blue-secondary bg-opacity-40 text-form rounded-md pl-10  focus:outline-none focus:ring focus:border-blue-50 bg-abu h-md border-abu border-2 text-gray-500"
                       autoComplete="off"
                       style={{
                         width: "100%",
@@ -92,7 +92,7 @@ export default function SignUp() {
                       placeholder="NIK (Nomor Induk Kependudukan)"
                       type="number"
                       name="nik"
-                      className="py-2 text-sm bg-background border-blue-secondary bg-opacity-40 text-form rounded-md pl-10  focus:outline-none focus:ring focus:border-blue-50 bg-abu h-md border-abu border-2"
+                      className="py-2 text-sm bg-background border-blue-secondary bg-opacity-40 text-form rounded-md pl-10  focus:outline-none focus:ring focus:border-blue-50 bg-abu h-md border-abu border-2 text-gray-500"
                       autoComplete="off"
                       style={{
                         width: "100%",
@@ -152,7 +152,7 @@ export default function SignUp() {
                       placeholder="Alamat (Sesuai KTP)"
                       type="text"
                       name="address"
-                      className="py-2 text-sm text-form bg-background border-blue-secondary bg-opacity-40 rounded-md pl-10  focus:outline-none focus:ring focus:border-blue-50 bg-abu h-md border-abu border-2"
+                      className="py-2 text-sm text-form bg-background border-blue-secondary bg-opacity-40 rounded-md pl-10  focus:outline-none focus:ring focus:border-blue-50 bg-abu h-md border-abu border-2 text-gray-500"
                       autoComplete="off"
                       style={{
                         width: "100%",
