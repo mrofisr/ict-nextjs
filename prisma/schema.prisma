@@ -16,21 +16,21 @@ model admin {
 }
 
 model detail_tempat_penitipan {
-  id_detail_tempat_penitipan Int                                 @id @default(autoincrement())
-  foto_tempat_penitipan      String                              @db.VarChar(255)
-  nama_tempat_penitipan      String                              @db.VarChar(100)
-  harga                      String                              @db.VarChar(50)
-  jenis_hewan                String                              @db.VarChar(255)
-  deskripsi                  String                              @db.Text
-  alamat                     String                              @db.VarChar(255)
-  kota                       String                              @db.VarChar(100)
+  id_detail_tempat_penitipan Int                  @id @default(autoincrement())
+  foto_tempat_penitipan      String               @db.VarChar(255)
+  nama_tempat_penitipan      String               @db.VarChar(100)
+  alamat                     String               @db.VarChar(255)
+  kota                       String               @db.VarChar(100)
   id_user_tempat_penitipan   Int
+  deskripsi                  String               @db.Text
+  harga                      String               @db.VarChar(50)
+  jenis_hewan                String               @db.VarChar(255)
   table_user_penitipan       table_user_penitipan @relation(fields: [id_user_tempat_penitipan], references: [id_user_penitipan], onDelete: Cascade, map: "detail_tempat_penitipan_ibfk_1")
+
   @@index([id_user_tempat_penitipan], map: "id_user_tempat_penitipan")
 }
 
 model detail_user {
-  id                  Int                       @id @default(autoincrement())
   id_detail_user      Int
   no_ktp              String                    @db.VarChar(16)
   alamat              String                    @db.VarChar(255)
@@ -39,7 +39,9 @@ model detail_user {
   url_foto_wajah      String                    @db.VarChar(100)
   url_foto_selfie_ktp String                    @db.VarChar(100)
   jenis_kelamin       detail_user_jenis_kelamin
+  id                  Int                       @id @default(autoincrement())
   table_user          table_user                @relation(fields: [id_detail_user], references: [id_user], onDelete: Cascade, map: "detail_user_ibfk_1")
+
   @@index([id_detail_user], map: "id_detail_user")
 }
 
@@ -49,6 +51,7 @@ model faq_admin {
   pertanyaan String @db.VarChar(255)
   jawaban    String @db.VarChar(255)
   admin      admin  @relation(fields: [id_admin], references: [id_admin], onDelete: Cascade, map: "faq_admin_ibfk_1")
+
   @@index([id_admin], map: "id_admin")
 }
 
@@ -57,7 +60,7 @@ model table_user {
   nama        String        @db.VarChar(100)
   email       String        @db.VarChar(100)
   password    String        @db.VarChar(100)
-  detail_user detail_user[] 
+  detail_user detail_user[]
   transaksi   transaksi[]
 }
 
@@ -67,7 +70,7 @@ model table_user_penitipan {
   email                   String                    @db.VarChar(100)
   password                String                    @db.VarChar(100)
   detail_tempat_penitipan detail_tempat_penitipan[]
-  detail_user_penitipan   detail_user_penitipan[]   
+  detail_user_penitipan   detail_user_penitipan[]
   transaksi               transaksi[]
 }
 
@@ -85,6 +88,7 @@ model transaksi {
   id_tempat_penitipan  Int
   table_user_penitipan table_user_penitipan          @relation(fields: [id_tempat_penitipan], references: [id_user_penitipan], onDelete: Cascade, map: "transaksi_ibfk_2")
   table_user           table_user                    @relation(fields: [id_user], references: [id_user], onDelete: Cascade, map: "transaksi_ibfk_1")
+
   @@index([id_tempat_penitipan], map: "id_tempat_penitipan")
   @@index([id_user], map: "id_user")
 }
@@ -93,14 +97,15 @@ model detail_user_penitipan {
   id                       Int                                 @id @default(autoincrement())
   id_detail_user_penitipan Int
   no_ktp                   String                              @db.VarChar(16)
-  no_telp                  String                              @db.VarChar(15)
   alamat                   String                              @db.VarChar(255)
   tanggal_lahir            DateTime                            @db.Date
   status_akun              detail_user_penitipan_status_akun
   url_foto_wajah           String                              @db.VarChar(100)
   url_foto_selfie_ktp      String                              @db.VarChar(100)
   jenis_kelamin            detail_user_penitipan_jenis_kelamin
+  no_telp                  String                              @db.VarChar(15)
   table_user_penitipan     table_user_penitipan                @relation(fields: [id_detail_user_penitipan], references: [id_user_penitipan], onDelete: Cascade, map: "detail_user_penitipan_ibfk_1")
+
   @@index([id_detail_user_penitipan], map: "id_detail_user_penitipan")
 }
 
