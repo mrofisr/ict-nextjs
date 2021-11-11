@@ -15,7 +15,6 @@ export default function Cat() {
         <link
           rel="preconnect"
           href="https://fonts.gstatic.com"
-          crossOrigin
         ></link>
         <link
           href="https://fonts.googleapis.com/css2?family=Inter&family=Poppins:wght@600&display=swap"
