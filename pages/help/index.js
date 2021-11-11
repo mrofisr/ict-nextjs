@@ -1,5 +1,5 @@
 import Head from "@/components/Head";
-import Bar from "@/components/Bar";
+import BarPetCare from "@/components/BarPetCare";
 
 export async function getServerSideProps (ctx) {
   const getFaq = await fetch('https://ict-nextjs.vercel.app/api/admin/faq');
@@ -14,7 +14,14 @@ export async function getServerSideProps (ctx) {
 export default function Help({data}) {
   return (
     <div className="flex flex-col">
-      <Head />
+      <Head>
+        <link
+          rel="stylesheet"
+          href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+          crossOrigin="anonymous"
+        />
+      </Head>
       <div className="font-body">
         <div className="h-full bg-gray-100">
           <div className="block box-border bg-white max-w-md w-full mx-auto h-full">
@@ -33,7 +40,7 @@ export default function Help({data}) {
 
                 <div className="pt-7"></div>
                 {data.map((faq) =>              
-                  <div key={faq.id_faq} className="collapse border-2 border-blue-secondary rounded-box border-base-300 collapse-arrow font-secondary w-full mt-4 py-0 text-gray-600">
+                  <div key={faq.id_faq} className="collapse border-2 rounded-box border-blue-secondary collapse-arrow font-secondary w-full mt-4 py-0 text-gray-500">
                     <input type="checkbox" />
                     <div className="collapse-title">{faq.pertanyaan}</div>
                     <div className="collapse-content ">
@@ -47,7 +54,7 @@ export default function Help({data}) {
               </div>
             </div>
 
-            <Bar currentPage="help" />
+            <BarPetCare currentPage="help" />
           </div>
         </div>
       </div>

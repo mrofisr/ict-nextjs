@@ -3,13 +3,13 @@ import { useRouter } from "next/router";
 export default function Back(props) {
   const router = useRouter();
   return (
-    <div>
+    <div className={props.page === 'space-details' ? "flex justify-center mt-1 mr-3" : ""}>
       <button
         onClick={() => router.back()}
-        className={props.page === 'space-details' ? "fixed z-20 top-4 ml-4 flex justify-center items-center bg-white p-2 rounded-xl hover:bg-blue-secondary-hover" : "flex justify-center items-center bg-gray-100 p-2 rounded-xl bg-blue-secondary hover:bg-blue-secondary-hover"}
+        className={props.page === 'space-details' ? "flex justify-center items-center mr-1 mt-1.5 bg-white rounded-xl" : "flex justify-center items-center bg-gray-100 p-2 rounded-xl bg-blue-secondary hover:bg-blue-secondary-hover"}
       >
         <svg
-          width="23"
+          width={props.page === 'space-details' ? "19": "23"}
           height="19"
           viewBox="0 0 23 19"
           fill="none"
