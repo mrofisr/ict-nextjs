@@ -10,7 +10,6 @@ export function authPage (context, role) {
                 });
             case "user_penitipan":
                 const {user_penitipan_cookie} = cookies(context);
-                console.log(user_penitipan_cookie);
                 return resolve({
                     token: user_penitipan_cookie
                 });
@@ -24,7 +23,6 @@ export function unAuthPage (context) {
     return new Promise ((resolve) => {
         const {user_cookie} = cookies(context);
         const {user_penitipan_cookie} = cookies(context);
-        console.log(user_penitipan_cookie);
         return resolve ({
             token_user: user_cookie,
             token_user_penitipan: user_penitipan_cookie
