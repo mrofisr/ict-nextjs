@@ -59,7 +59,7 @@ export default async function handler(req, res) {
 				},
 				process.env.JWT_SECRET,
 				{
-					expiresIn: "7d",
+					expiresIn: "14d",
 				}
 			);
 			return res.status(200).json({
@@ -104,7 +104,7 @@ export default async function handler(req, res) {
 				},
 				process.env.JWT_SECRET,
 				{
-					expiresIn: "7d",
+					expiresIn: "14d",
 				}
 			);
 
