@@ -15,7 +15,7 @@ export default async function handler(req, res) {
 		return res.status(400).json({
 			...error,
 			message:
-				"Must send request query id table user / table user penitipan",
+				"Must send request query role table user / table user penitipan",
 		});
 	switch (role) {
 		case "user":
