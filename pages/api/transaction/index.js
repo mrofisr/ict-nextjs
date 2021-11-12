@@ -2,6 +2,7 @@ import { succes, error } from "@/utils/res";
 import prisma from "@/libs/prisma";
 import { authApi, defaultAuthApi } from "@/middlewares/authApi";
 
+
 export default async function handler(req, res) {
 	switch (req.method) {
 		case "GET":
