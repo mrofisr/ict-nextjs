@@ -126,7 +126,6 @@ export default async function handler(req, res) {
 					},
 				},
 			});
-			console.log(addUserPenitipan);
 			const addedUserPenitipan =
 				await prisma.table_user_penitipan.findFirst({
 					where: { id_user_penitipan: addUserPenitipan.id_user_penitipan },
