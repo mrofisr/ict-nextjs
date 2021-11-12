@@ -3,6 +3,7 @@ import getRequest from "@/libs/get-req";
 import bcrypt from "bcryptjs";
 import prisma from "@/libs/prisma";
 
+
 export const config = {
 	api: {
 		bodyParser: false,
@@ -126,7 +127,7 @@ export default async function handler(req, res) {
 					},
 				},
 			});
-			console.log(addUserPenitipan);
+
 			const addedUserPenitipan =
 				await prisma.table_user_penitipan.findFirst({
 					where: { id_user_penitipan: addUserPenitipan.id_user_penitipan },

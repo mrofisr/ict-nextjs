@@ -3,7 +3,6 @@ import { useState } from "react";
 import Head from "@/components/Head";
 import Back from "@/components/Back";
 import { unAuthPage } from "@/middlewares/auth-page-user";
-import { useState } from "react";
 
 export async function getServerSideProps(ctx) {
 	const { token_user, token_user_penitipan } = await unAuthPage(ctx);
