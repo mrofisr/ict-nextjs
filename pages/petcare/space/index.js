@@ -2,6 +2,24 @@ import Head from "@/components/Head";
 import BarPetCare from "@/components/BarPetCare";
 import Link from "next/link";
 import StatusCard from "@/components/StatusCard";
+// import { getServerSideProps } from "pages";
+import { authPage } from "@/middlewares/auth-page-user";
+
+export async function getServerSideProps (ctx) {
+  const { token } = await authPage(ctx, "user_penitipan");
+  
+  if (!token || token === "undefined") {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/account/login',
+      },
+    }
+  }
+  return {
+    props: {}
+  }
+}
 
 export default function SpacePetCare() {
   const response = {
