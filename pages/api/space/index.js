@@ -48,6 +48,13 @@ export default async function handler(req, res) {
 					...error,
 					message: "Req body not valid / some missing",
 				});
+			const checkStatus = await prisma.detail_tempat_penitipan.findFirst({
+				where: {id_detail_user_penitipan: auth.id},
+				select: {
+					status_akun: true
+				}
+			});
+			console.log(checkStatus);
 			const addSpace = await prisma.detail_tempat_penitipan.create({
 				data: {
 					id_user_tempat_penitipan: auth.id,
