@@ -46,6 +46,7 @@ export default function Login() {
     const loginRes = await login.json();
     if (!login.ok) return console.log(`error ${loginRes.message}`);
     Cookies.set("user_cookie", loginRes.data.token);
+    Router.push('/')
   }
 
   async function loginUserPenitipan (e) {
@@ -112,7 +113,7 @@ export default function Login() {
                       placeholder="Masukkan Email Kamu"
                       type="email"
                       name="email"
-                      className="py-2 text-sm bg-background bg-opacity-40 border-blue-secondary text-form rounded-md pl-10 focus:outline-none focus:ring focus:border-blue-50 bg-abu border-abu border-2"
+                      className="py-2 text-sm bg-background bg-opacity-40 text-search-font border-blue-secondary text-form rounded-md pl-10 focus:outline-none focus:ring focus:border-blue-50 bg-abu border-abu border-2"
                       autoComplete="off"
                       style={{ width: "100%", textIndent: "24px", height: "47px" }}
                     ></input>
@@ -132,7 +133,7 @@ export default function Login() {
                       placeholder="Masukkan Password Kamu"
                       type="password"
                       name="password"
-                      className="py-2 text-sm text-form bg-background border-blue-secondary bg-opacity-40 rounded-md pl-10 focus:outline-none focus:ring focus:border-blue-50 bg-abu h-md border-abu border-2"
+                      className="py-2 text-sm text-form bg-background text-search-font border-blue-secondary bg-opacity-40 rounded-md pl-10 focus:outline-none focus:ring focus:border-blue-50 bg-abu h-md border-abu border-2"
                       autoComplete="off"
                       style={{ width: "100%", textIndent: "24px", height: "47px" }}
                     ></input>

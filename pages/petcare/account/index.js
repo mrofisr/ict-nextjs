@@ -33,10 +33,12 @@ export default function AccountPetcare() {
           <div className="block box-border bg-white max-w-md w-full mx-auto h-full">
             <div className="flex flex-col">
               <div className="mx-5 my-10">
+                
                 {/* title */}
                 <div className="font-normal font-main text-gray-900 text-2xl">
                   Akun
                 </div>
+
                 {/* Content */}
                 <div className="mb-7 mt-10 flex flex-col text-center">
                   <img src="/logo-pabrik.png" className="w-28 mx-auto"></img>
@@ -59,6 +61,7 @@ export default function AccountPetcare() {
                   <div className="mt-2">
                     <hr />
                   </div>
+
                   {/* Button Icon Setting */}
                   <Link href="/account/change-password">
                     <div className="mt-3 cursor-pointer" style={{ display: "flex" }}>
@@ -79,6 +82,7 @@ export default function AccountPetcare() {
                   <div className="mt-2">
                     <hr />
                   </div>
+
                   {/* Button Input Space */}
                   <Link href="/petcare/account/input-space">
                     <div className="mt-3 cursor-pointer" style={{ display: "flex" }}>
@@ -101,6 +105,7 @@ export default function AccountPetcare() {
                   <div className="mt-2">
                     <hr />
                   </div>
+
                   {/* Button Icon Kontak Kami */}
                   <a href="#">
                     <div className="mt-3" style={{ display: "flex" }}>
@@ -126,12 +131,13 @@ export default function AccountPetcare() {
                     </div>
                   </a>
                 </div>
+
                 {/* Log out */}
                 <Link href="../account/login">
-                  <div className=" w-full h-lg text-white border-red-600 bg-red-600 border-2 rounded-md mt-10 transition-all duration-300 hover:border-red-600 hover:bg-white hover:text-red-600">
+                  <div className=" w-full h-lg text-white border-red-600 cursor-pointer bg-red-600 border-2 rounded-md mt-10 transition-all duration-300 hover:border-red-600 hover:bg-white hover:text-red-600">
                     <div className="content">
                       <p
-                        className="tracking-tight text-blue text-lg font-semibold  text-center leading-3 group-hover:text-white"
+                        className="tracking-tight text-blue text-lg font-semibold text-center leading-3 group-hover:text-white"
                         style={{ lineHeight: "2.6" }}
                       >
                         Log Out

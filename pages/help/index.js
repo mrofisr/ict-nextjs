@@ -1,17 +1,18 @@
 import Head from "@/components/Head";
 import Bar from "@/components/Bar";
+import FloatingWA from "@/components/FloatingWA";
 
-export async function getServerSideProps (ctx) {
-  const getFaq = await fetch('https://ict-nextjs.vercel.app/api/admin/faq');
+export async function getServerSideProps(ctx) {
+  const getFaq = await fetch("https://petspace.vercel.app/api/admin/faq");
   const getFaqRes = await getFaq.json();
   return {
     props: {
-      data: getFaqRes.data
-    }
-  }
+      data: getFaqRes.data,
+    },
+  };
 }
 
-export default function Help({data}) {
+export default function Help({ data }) {
   return (
     <div className="flex flex-col">
       <Head>
@@ -39,19 +40,21 @@ export default function Help({data}) {
                 </p>
 
                 <div className="pt-7"></div>
-                {data.map((faq) =>              
-                  <div key={faq.id_faq} className="collapse border-2 rounded-box border-blue-secondary collapse-arrow font-secondary w-full mt-4 py-0 text-gray-500">
+                {data.map((faq) => (
+                  <div
+                    key={faq.id_faq}
+                    className="collapse border-2 rounded-box border-blue-secondary collapse-arrow font-secondary w-full mt-4 py-0 text-gray-500"
+                  >
                     <input type="checkbox" />
                     <div className="collapse-title">{faq.pertanyaan}</div>
                     <div className="collapse-content ">
-                      <p className="text-sm">
-                        {faq.jawaban}
-                      </p>
+                      <p className="text-sm">{faq.jawaban}</p>
                     </div>
                   </div>
-                )}
-                <div className="w-full h-64"></div>
+                ))}
+                <FloatingWA />
               </div>
+              <div className="w-full h-64"></div>
             </div>
 
             <Bar currentPage="help" />

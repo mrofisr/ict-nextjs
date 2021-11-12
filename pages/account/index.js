@@ -88,7 +88,7 @@ export default function Account() {
                 </div>
                 {/* Log out */}
                 <Link href="account/login">
-                  <div className=" w-full h-lg text-white border-red-600 bg-red-600 border-2 rounded-md mt-10 transition-all duration-300 hover:border-red-600 hover:bg-white hover:text-red-600">
+                  <div className=" w-full h-lg cursor-pointer text-white border-red-600 bg-red-600 border-2 rounded-md mt-10 transition-all duration-300 hover:border-red-600 hover:bg-white hover:text-red-600">
                     <div className="content">
                       <p
                         className="tracking-tight text-blue text-lg font-semibold  text-center leading-3 group-hover:text-white"
