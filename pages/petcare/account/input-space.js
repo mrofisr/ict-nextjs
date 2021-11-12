@@ -1,29 +1,28 @@
 import Head from "@/components/Head";
 import Bar from "@/components/Bar";
 import Back from "@/components/Back";
-import { authPage } from "@/middlewares/auth-page-user";
+// import { authPage } from "@/middlewares/auth-page-user";
 
-export async function getServerSideProps (ctx){
-  const { token } = await authPage(ctx, "user_penitipan");
-  
-  if (!token) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/account/login',
-      },
-    }
-  }
-  // console.log(token);
-  return {
-    props: {
-      token
-    }
-  }
-}
+// export async function getServerSideProps (ctx){
+//   const { token } = await authPage(ctx, "user_penitipan");
 
-export default function InputSpace({token}) {
-  console.log(token);
+//   if (!token) {
+//     return {
+//       redirect: {
+//         permanent: false,
+//         destination: '/account/login',
+//       },
+//     }
+//   }
+
+//   return {
+//     props: {
+//       token
+//     }
+//   }
+// }
+
+export default function InputSpace() {
   return (
     <div className="flex flex-col">
       <Head />
@@ -132,6 +131,32 @@ export default function InputSpace({token}) {
                     placeholder="Informasi Tambahan"
                     className="px-4 py-3 mt-3 w-full text border-opacity-100 border-2 rounded-lg border-blue-secondary"
                   ></textarea>
+
+                  <div class="mt-3">
+                    <span class="text-gray-500">Menerima Penitipan:</span>
+                    <div class="mt-2">
+                      <div>
+                        <label class="inline-flex items-center">
+                          <input
+                            type="checkbox"
+                            name="anjing"
+                            class="form-checkbox text-indigo-600"
+                          />
+                          <span class="ml-2">Anjing</span>
+                        </label>
+                      </div>
+                      <div>
+                        <label class="inline-flex items-center">
+                          <input
+                            type="checkbox"
+                            name="kucing"
+                            class="form-checkbox text-green-500"
+                          />
+                          <span class="ml-2">Kucing</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
 
                   <div className="flex mt-10">
                     <img src="/infoIcon.svg" className="mr-3"></img>
