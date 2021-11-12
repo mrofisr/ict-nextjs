@@ -7,6 +7,7 @@ import { authPage } from "@/middlewares/auth-page-user";
 
 export async function getServerSideProps (ctx) {
   const { token } = await authPage(ctx, "user_penitipan");
+  console.log(token);
   
   if (!token || token === "undefined") {
     return {
@@ -17,11 +18,13 @@ export async function getServerSideProps (ctx) {
     }
   }
   return {
-    props: {}
+    props: {
+      token
+    }
   }
 }
 
-export default function SpacePetCare() {
+export default function SpacePetCare({}) {
   const response = {
     success: true,
     message: "Data berhasil didapatkan",
