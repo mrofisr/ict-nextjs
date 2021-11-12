@@ -2,7 +2,8 @@ import Head from "@/components/Head";
 import Bar from "@/components/Bar";
 import Back from "@/components/Back";
 import { authPage } from "@/middlewares/auth-page-user";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import  Router  from "next/router";
 
 
 
@@ -16,6 +17,15 @@ export async function getServerSideProps (ctx){
   // });
   // const ress = await res.json();
   // console.log(ress);
+  // const res = await fetch('https://petspace-admin.vercel.app/api/admin/count', {
+  //   headers:{
+  //     "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtYSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2MzY2ODk2MzIsImV4cCI6MTYzNzI5NDQzMn0.7kAfyf-85MuSkBGougRTgAdqb6FyNuFux5-eH2k-1eQ"
+  //   }
+  // }
+  // );
+  // console.log(res)
+  // const data = await res.json();
+  // console.log(data);
 
   if (!token) {
     return {
@@ -42,18 +52,64 @@ export default function InputSpace({token}) {
     foto_1: "",
     foto_2: "",
     foto_3: "",
-    jenis_hewan: "Anjing"
+    jenis_hewan: ""
   });
+
+  const [checkbox, setCheckbox] = useState({
+    hewan_1: false,
+    hewan_2: false,
+
+  });
+
+  useEffect(() => {
+    const hewan_1 = (checkbox.hewan_1) ? "Anjing" : "";
+    const hewan_2 = (checkbox.hewan_2) ? "Kucing" : "";
+    const pet = `${hewan_1} ${hewan_2}`;
+    console.log(pet);
+    if(pet.startsWith('Anjing K')) {
+
+      pet = pet.replace(' ', ',')
+    } else {
+      pet = pet.replace(' ', '')
+    }
+    setField({
+      ...field,
+      jenis_hewan: pet,
+    })
+  }, [checkbox])
 
   async function createHandler (e) {
     e.preventDefault();
+    const formData = new FormData()
+    Object.entries(field).forEach(([key, values]) => {
+        formData.append(key, values)
+    })
+
     const createReq = await fetch('/api/space', {
       method: "POST",
       headers: {
         "Authorization": "Bearer " + token
       },
+      body: formData
+    });
+    const createRes = await createReq.json();
+    // if (!createReq.ok) return console.log("Error Bos");
+    console.log(createRes);
+    console.log(createRes.succes);
+    if (createRes.succes) {
+      console.log("hallo")
+      document.getElementById("modal-acc").classList.remove("hidden");
+      return;
+    }
+    document.getElementById("modal-failed").classList.remove("hidden");
+  }
 
-    })
+  const okButtonHandler = (e) => {
+    Router.replace("/petcare/account")
+  };
+
+  const failButtonHandler = (e) => {
+    document.getElementById("modal-failed").classList.add("hidden")
   }
 
   function imageHandler (e) {
@@ -69,6 +125,15 @@ export default function InputSpace({token}) {
     setField({
       ...field,
       [getName]: e.target.value
+    });
+  }
+
+  function checkHandler (e) {
+    const getName = e.target.getAttribute('name');
+    setCheckbox({
+      ...checkbox,
+      [getName]: e.target.checked,
+
     });
   }
   return (
@@ -90,7 +155,7 @@ export default function InputSpace({token}) {
                 </p>
 
                 <form
-                  action="/space/account/input-space"
+                  action="POST"
                   id="spaceForm"
                   className="mt-8 font-secondary text-sm text-search-font"
                 >
@@ -191,6 +256,38 @@ export default function InputSpace({token}) {
                     className="px-4 py-3 mt-3 w-full text border-opacity-100 border-2 rounded-lg border-blue-secondary"
                   ></textarea>
 
+                  <div className="mt-3">
+                    <span className="text-gray-500">Menerima Penitipan:</span>
+                    <div className="mt-2">
+                      <div>
+                        <label className="inline-flex items-center">
+                          <input
+                            onChange={checkHandler}
+                            type="checkbox"
+                            defaultChecked={false}
+                            value="Anjing"
+                            name="hewan_1"
+                            className="form-checkbox text-indigo-600"
+                          />
+                          <span className="ml-2">Anjing</span>
+                        </label>
+                      </div>
+                      <div>
+                        <label className="inline-flex items-center">
+                          <input
+                            onChange={checkHandler}
+                            defaultChecked={false}
+                            value="Kucing"
+                            type="checkbox"
+                            name="hewan_2"
+                            className="form-checkbox text-green-500"
+                          />
+                          <span className="ml-2">Kucing</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
                   <div className="flex mt-10">
                     <img src="/infoIcon.svg" className="mr-3"></img>
                     <p>
@@ -198,6 +295,95 @@ export default function InputSpace({token}) {
                       sebelum lanjut
                     </p>
                   </div>
+
+                  <div
+                    id="modal-acc"
+                    className="max-w-md -ml-5 w-full fixed bottom-40 hidden"
+                  >
+                    <div className="mx-auto p-5 border w-5/6 shadow-lg rounded-md bg-white">
+                      <div className="mt-3 text-center">
+                        <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
+                          <svg
+                            className="h-6 w-6 text-green-600"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M5 13l4 4L19 7"
+                            ></path>
+                          </svg>
+                        </div>
+                        <h3 className="text-lg leading-6 font-medium text-gray-900">
+                          Successful!
+                        </h3>
+                        <div className="mt-2 px-7 py-3">
+                          <p className="text-sm text-gray-500">
+                            Adding Space Succesfully!
+                          </p>
+                        </div>
+                        <div className="items-center px-4 py-3">
+                          <button
+                            id="ok-btn"
+                            onClick={okButtonHandler}
+                            className="px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300"
+                          >
+                            OK
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* modal failed */}
+                  <div
+                    id="modal-failed"
+                    className="max-w-md -ml-5 w-full fixed bottom-40 hidden"
+                  >
+                    <div className="mx-auto p-5 border w-5/6 shadow-lg rounded-md bg-white">
+                      <div className="mt-3 text-center">
+                        <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
+                          <svg
+                            aria-hidden="true"
+                            focusable="false"
+                            data-prefix="fas"
+                            data-icon="times"
+                            className="svg-inline--fa fa-times fa-w-11 h-6 w-6 "
+                            role="img"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 352 512"
+                          >
+                            <path
+                              fill="#FF0000"
+                              d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                            ></path>
+                          </svg>
+                        </div>
+                        <h3 className="text-lg leading-6 font-medium text-gray-900">
+                          Failed!
+                        </h3>
+                        <div className="mt-2 px-7 py-3">
+                          <p className="text-sm text-gray-500">
+                            Fail! 
+                          </p>
+                        </div>
+                        <div className="items-center px-4 py-3">
+                          <button
+                            id="fail-btn"
+                            onClick={failButtonHandler}
+                            className="px-4 py-2 bg-red-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-green-300"
+                          >
+                            OK
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
 
                   <input
                     onClick={createHandler}

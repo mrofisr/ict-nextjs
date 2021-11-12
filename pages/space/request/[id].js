@@ -51,7 +51,7 @@ export default function Template() {
                   <select
                     id="petType"
                     name="petType"
-                    className="select select-bordered w-full font-normal border-blue-secondary border-2 mt-3 "
+                    className="select select-bordered w-full bg-white font-normal border-blue-secondary border-2 mt-3 "
                     required
                   >
                     <option value="kucing" disabled="disabled" selected="selected">
@@ -64,7 +64,7 @@ export default function Template() {
                   <select
                     id="petSex"
                     name="petSex"
-                    className="select select-bordered w-full font-normal border-blue-secondary border-2 mt-3 "
+                    className="select select-bordered w-full bg-white font-normal border-blue-secondary border-2 mt-3 "
                     required
                   >
                     <option value="male" disabled="disabled" selected="selected">
@@ -78,7 +78,7 @@ export default function Template() {
                       <input
                         type="text"
                         placeholder="Umur Hewan"
-                        className="input input-bordered input-md text-search-font border-blue-secondary border-2 w-full"
+                        className="input input-bordered input-md bg-white text-search-font border-blue-secondary border-2 w-full"
                         required
                       />
                       <span className="bg-blue-secondary">tahun</span>
