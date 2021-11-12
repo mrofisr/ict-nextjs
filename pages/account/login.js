@@ -45,7 +45,7 @@ export default function Login() {
     });
     const loginRes = await login.json();
     if (!login.ok) return console.log(`error ${loginRes.message}`);
-    Cookies.set("user_cookie", loginRes.data.token);
+    Cookies.set("user_cookie", loginRes.data.token,  { expires: 14 });
   }
 
   async function loginUserPenitipan (e) {
@@ -59,8 +59,7 @@ export default function Login() {
     });
     const loginRes = await login.json();
     if (!login.ok) return console.log(`error, ${loginRes.message}`);
-    console.log(loginRes.data.token);
-    Cookies.set("user_penitipan_cookie", loginRes.data.token);
+    Cookies.set("user_penitipan_cookie", loginRes.data.token, { expires: 14 });
     Router.push('/petcare/space');
   }
 
