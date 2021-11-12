@@ -1,26 +1,27 @@
 import Head from "@/components/Head";
 import Bar from "@/components/Bar";
 import Back from "@/components/Back";
-// import { authPage } from "@/middlewares/auth-page-user";
+import { authPage } from "@/middlewares/auth-page-user";
 
-// export async function getServerSideProps (ctx){
-//   const { token } = await authPage(ctx, "user_penitipan");
+export async function getServerSideProps (ctx){
+  const { token } = await authPage(ctx, "user_penitipan");
 
-//   if (!token) {
-//     return {
-//       redirect: {
-//         permanent: false,
-//         destination: '/account/login',
-//       },
-//     }
-//   }
+  if (!token) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/account/login',
+      },
+    }
+  }
 
-//   return {
-//     props: {
-//       token
-//     }
-//   }
-// }
+  return {
+    props: {
+      token
+    }
+  }
+}
+
 
 export default function InputSpace() {
   return (

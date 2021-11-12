@@ -19,7 +19,7 @@ export default function StatusCard(props) {
           </div>
 
           <Link href="/space">
-            <button className="py-2.5 w-36 text-white text-xs bg-blue-main rounded-lg mt-8 md:text-sm mx-auto">
+            <button className={props.user === 'user_penitipan'? 'hidden' : "py-2.5 w-36 text-white text-xs bg-blue-main rounded-lg mt-8 md:text-sm mx-auto"}>
               <a>Browse Space</a>
             </button>
           </Link>
@@ -41,14 +41,14 @@ export default function StatusCard(props) {
         ></img>
         <div className="flex flex-col w-11/12 justify-between">
           <h2
-            className="text-white font-semibold md:text-base text-center"
+            className="text-white font-medium md:font-semibold text-sm md:text-base text-center"
             style={{ fontSize: "25px" }}
           >
             {props.petName}
           </h2>
-          <div className="text-base text-center font-serif text-white w-full my-6">
+          <div className="text-sm md:text-base text-center font-serif text-white w-full my-6">
             <p>{props.personName}</p>
-            <p>{`${props.dateIn} — ${props.dateOut}`}</p>
+            <p>{`${props.dateIn} - ${props.dateOut}`}</p>
             <p>{`Status: ${props.status}`}</p>
           </div>
 
@@ -65,27 +65,37 @@ export default function StatusCard(props) {
             </button>
           ) : (
             <div className="flex flex-row">
-              <button
-                className="py-2.5 w-36 mr-3 text-white font-medium bg-red-500 rounded-xl mt-3 md:text-sm mx-auto hover:bg-red-700 duration-200"
-                style={{ fontSize: "15px", width: "180px" }}
-              >
-                <a
-                  href={`https://api.whatsapp.com/send?phone=6285591639594&text=Test`}
+              {props.status === "Declined" ? (
+                <button
+                  className="py-2.5 w-36 text-white font-medium bg-red-600 rounded-xl mt-3 md:text-sm mx-auto duration-200"
+                  style={{ fontSize: "15px", width: "180px" }}
                 >
-                  Decline
-                </a>
-              </button>
+                  Declined
+                </button>
+              ) : props.status === "Accepted" ? (
+                <button
+                  className="py-2.5 w-36 text-white font-medium bg-yellow-600 rounded-xl cursor-default duration-200 mt-3 md:text-sm mx-auto"
+                  style={{ fontSize: "15px", width: "180px" }}
+                >
+                  Accepted
+                </button>
+              ) : (
+                <div className="flex w-full">
+                  <button
+                    className="py-2.5 w-36 mr-3 text-white font-medium bg-red-500 rounded-xl mt-3 md:text-sm mx-auto hover:bg-red-700 duration-200"
+                    style={{ fontSize: "15px", width: "180px" }}
+                  >
+                    Decline
+                  </button>
 
-              <button
-                className="py-2.5 w-36 text-white font-medium bg-yellow-pet rounded-xl hover:bg-yellow-pet-hover duration-200 mt-3 md:text-sm mx-auto"
-                style={{ fontSize: "15px", width: "180px" }}
-              >
-                <a
-                  href={`https://api.whatsapp.com/send?phone=6285591639594&text=Test`}
-                >
-                  Accept
-                </a>
-              </button>
+                  <button
+                    className="py-2.5 w-36 text-white font-medium bg-yellow-pet rounded-xl hover:bg-yellow-pet-hover duration-200 mt-3 md:text-sm mx-auto"
+                    style={{ fontSize: "15px", width: "180px" }}
+                  >
+                    Accept
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </div>

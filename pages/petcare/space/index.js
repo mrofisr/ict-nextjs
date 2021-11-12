@@ -1,45 +1,39 @@
 import Head from "@/components/Head";
 import BarPetCare from "@/components/BarPetCare";
-import Link from "next/link";
 import StatusCard from "@/components/StatusCard";
+import { authPage } from "@/middlewares/auth-page-user";
 
-export default function SpacePetCare() {
-  const response = {
-    success: true,
-    message: "Data berhasil didapatkan",
-    data: [
-      {
-        id_transaksi: 3,
-        nama_hewan: "Doggy",
-        nama_penitip: "Ivan",
-        jenis_hewan: "Anjing",
-        status_penitipan: "Pending",
+export async function getServerSideProps(context) {
+  const { token } = await authPage(context, "user_penitipan");
+
+  const req = await fetch(
+    "https://petspace.vercel.app/api/transaction",
+    {
+      headers: {
+        Authorization: "Bearer " + token,
       },
-      {
-        id_transaksi: 4,
-        nama_hewan: "Pussy",
-        nama_penitip: "Lintang",
-        jenis_hewan: "Kucing",
-        status_penitipan: "Success",
+    }
+  );
+  const res = await req.json();
+  console.log(res);
+
+  if (!token) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/account/login",
       },
-      {
-        id_transaksi: 5,
-        nama_hewan: "Puskesmas",
-        nama_penitip: "Wahyu",
-        jenis_hewan: "Kucing",
-        status_penitipan: "Pending",
-      },
-      {
-        id_transaksi: 6,
-        nama_hewan: "Droppy",
-        nama_penitip: "Rofi",
-        jenis_hewan: "Anjing",
-        status_penitipan: "Pending",
-      },
-    ],
+    };
+  }
+  return {
+    props: {
+      res,
+    },
   };
+}
 
-
+export default function SpacePetCare({ res }) {
+  
   return (
     <div className="flex flex-col">
       <Head />
@@ -59,16 +53,16 @@ export default function SpacePetCare() {
                   Yuk lihat daftar hewan yang ingin dititipkan di tempatmu
                 </p>
 
-                {response.data.length === 0 ? (
+                {res.data.length === 0 ? (
                   <div>
-                    <StatusCard pet="blank" />
+                    <StatusCard pet="blank" user="user_penitipan" />
                     <div className="w-full h-52"></div>
                   </div>
                 ) : (
                   <div></div>
                 )}
 
-                {response.data.map((status) => {
+                {res.data.map((status) => {
                   if (status.jenis_hewan === "Anjing") {
                     return (
                       <StatusCard

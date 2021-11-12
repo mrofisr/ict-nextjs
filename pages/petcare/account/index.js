@@ -2,11 +2,13 @@ import Link from "next/link";
 import Head from "@/components/Head";
 import BarPetCare from "@/components/BarPetCare";
 import { authPage } from "@/middlewares/auth-page-user";
+import Cookies from "js-cookie";
+import Router from "next/router";
 
 
-export async function getServerSideProps (ctx) {
+export async function getServerSideProps(ctx) {
   const { token } = await authPage(ctx, "user_penitipan");
-
+  console.log(token);
   if (!token) {
     return {
       redirect: {
@@ -24,6 +26,14 @@ export async function getServerSideProps (ctx) {
 }
 
 export default function AccountPetcare() {
+
+  const logoutUser = (e) => {
+    e.preventDefault()
+
+    Cookies.remove("user_penitipan_cookie");
+    Router.push('/')
+  }
+
   return (
     <div className="flex flex-col">
       <Head />
@@ -63,7 +73,7 @@ export default function AccountPetcare() {
                   </div>
 
                   {/* Button Icon Setting */}
-                  <Link href="/account/change-password">
+                  <Link href="/petcare/account/change-password">
                     <div className="mt-3 cursor-pointer" style={{ display: "flex" }}>
                       <img src="/setting.svg"></img>
                       <p
@@ -133,7 +143,7 @@ export default function AccountPetcare() {
                 </div>
 
                 {/* Log out */}
-                <Link href="../account/login">
+                <button className="w-full" onClick={logoutUser}>
                   <div className=" w-full h-lg text-white border-red-600 cursor-pointer bg-red-600 border-2 rounded-md mt-10 transition-all duration-300 hover:border-red-600 hover:bg-white hover:text-red-600">
                     <div className="content">
                       <p
@@ -144,7 +154,7 @@ export default function AccountPetcare() {
                       </p>
                     </div>
                   </div>
-                </Link>
+                </button>
                 {/* Version */}
                 <div className="text-right mt-2">
                   <p>PetSpace v.1.0</p>
