@@ -9,7 +9,19 @@ import "swiper/css/pagination";
 
 SwiperCore.use([FreeMode, Pagination]);
 
-export default function Account() {
+export async function getServerSideProps (ctx) {
+  const spaceSemarang = await fetch ('https://petspace.vercel.app/api/space/by-city?city=semarang');
+  const spaceSemarangRes = await spaceSemarang.json();
+  console.log(spaceSemarangRes);
+
+  return {
+    props: {
+      semarang: spaceSemarangRes.data
+    }
+  }
+}
+
+export default function Account({semarang}) {
   const user = null;
 
   return (
@@ -107,7 +119,31 @@ export default function Account() {
                   }}
                   className="mySwiper mt-3"
                 >
-                  <SwiperSlide className="text-center bg-white shadow-md rounded-xl h-full border-2 cursor-pointer">
+                  {semarang.map(space => 
+                    <SwiperSlide key={space.id_user_tempat_penitipan} className="text-center bg-white shadow-md rounded-xl h-full border-2 cursor-pointer">
+                      <Link href="space/1">
+                        <div className="flex flex-col">
+                          <img
+                            src="/img.png"
+                            className="rounded-t-xl h-1/3"
+                            loading="lazy"
+                          ></img>
+                          <div className="flex flex-col text-left mx-2 my-3 h-2/3">
+                            <h3 className="text-blue-main font-medium text-base">
+                              {space.nama_tempat_penitipan}
+                            </h3>
+                            <h4 className="text-yellow-pet font-medium text-sm">
+                              Rp{space.harga}/hari
+                            </h4>
+                            <p className="text-xs font-light text-gray-500 mt-1">
+                              Kota {space.kota}
+                            </p>
+                          </div>
+                        </div>
+                      </Link>
+                    </SwiperSlide>
+                  )}
+                  {/* <SwiperSlide className="text-center bg-white shadow-md rounded-xl h-full border-2 cursor-pointer">
                     <Link href="space/1">
                       <div className="flex flex-col">
                         <img
@@ -172,29 +208,7 @@ export default function Account() {
                         </div>
                       </div>
                     </Link>
-                  </SwiperSlide>
-                  <SwiperSlide className="text-center bg-white shadow-md rounded-xl h-full border-2 cursor-pointer">
-                    <Link href="space/1">
-                      <div className="flex flex-col">
-                        <img
-                          src="/img.png"
-                          className="rounded-t-xl h-1/3"
-                          loading="lazy"
-                        ></img>
-                        <div className="flex flex-col text-left mx-2 my-3 h-2/3">
-                          <h3 className="text-blue-main font-medium text-base">
-                            Penitipan Hewan Cantika
-                          </h3>
-                          <h4 className="text-yellow-pet font-medium text-sm">
-                            Rp28.000/hari
-                          </h4>
-                          <p className="text-xs font-light text-gray-500 mt-1">
-                            Kota Semarang
-                          </p>
-                        </div>
-                      </div>
-                    </Link>
-                  </SwiperSlide>{" "}
+                  </SwiperSlide> */}
                 </Swiper>
 
                 <div className="flex flex-row justify-between mt-9">

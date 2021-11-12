@@ -3,6 +3,30 @@ import Back from "@/components/Back";
 import Link from "next/link";
 import { useState } from "react";
 import Cookies from "js-cookie";
+import { unAuthPage } from "@/middlewares/auth-page-user";
+import Router  from "next/router";
+
+export async function getServerSideProps (ctx) {
+  const {token_user, token_user_penitipan} = await unAuthPage(ctx);
+  if (token_user) 
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+    }
+  if (token_user_penitipan)
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/petcare/space',
+      },
+    }
+
+  return {
+    props: {}
+  }
+}
 
 export default function Login() {
   const [fields, setFields] = useState({
@@ -21,14 +45,23 @@ export default function Login() {
     });
     const loginRes = await login.json();
     if (!login.ok) return console.log(`error ${loginRes.message}`);
-    console.log(loginRes);
-    console.log(loginRes.data.token);
     Cookies.set("user_cookie", loginRes.data.token);
   }
 
   async function loginUserPenitipan (e) {
     e.preventDefault();
-    // alert("hallo ini user Penitipan")
+    const login = await fetch('/api/user/auth/login?role=user_penitipan', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(fields)
+    });
+    const loginRes = await login.json();
+    if (!login.ok) return console.log(`error, ${loginRes.message}`);
+    console.log(loginRes.data.token);
+    Cookies.set("user_penitipan_cookie", loginRes.data.token);
+    Router.push('/petcare/space');
   }
 
   function fieldHandler (e) {
@@ -79,7 +112,7 @@ export default function Login() {
                       placeholder="Masukkan Email Kamu"
                       type="email"
                       name="email"
-                      className="py-2 text-sm bg-background bg-opacity-40 border-blue-secondary text-form rounded-md pl-10 focus:outline-none focus:ring focus:border-blue-50 bg-abu border-abu border-2 text-gray-500"
+                      className="py-2 text-sm bg-background bg-opacity-40 border-blue-secondary text-form rounded-md pl-10 focus:outline-none focus:ring focus:border-blue-50 bg-abu border-abu border-2"
                       autoComplete="off"
                       style={{ width: "100%", textIndent: "24px", height: "47px" }}
                     ></input>
@@ -99,7 +132,7 @@ export default function Login() {
                       placeholder="Masukkan Password Kamu"
                       type="password"
                       name="password"
-                      className="py-2 text-sm text-form bg-background border-blue-secondary bg-opacity-40 rounded-md pl-10 focus:outline-none focus:ring focus:border-blue-50 bg-abu h-md border-abu border-2 text-gray-500"
+                      className="py-2 text-sm text-form bg-background border-blue-secondary bg-opacity-40 rounded-md pl-10 focus:outline-none focus:ring focus:border-blue-50 bg-abu h-md border-abu border-2"
                       autoComplete="off"
                       style={{ width: "100%", textIndent: "24px", height: "47px" }}
                     ></input>

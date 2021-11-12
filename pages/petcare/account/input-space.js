@@ -1,8 +1,29 @@
 import Head from "@/components/Head";
 import Bar from "@/components/Bar";
 import Back from "@/components/Back";
+import { authPage } from "@/middlewares/auth-page-user";
 
-export default function InputSpace() {
+export async function getServerSideProps (ctx){
+  const { token } = await authPage(ctx, "user_penitipan");
+  
+  if (!token) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/account/login',
+      },
+    }
+  }
+  // console.log(token);
+  return {
+    props: {
+      token
+    }
+  }
+}
+
+export default function InputSpace({token}) {
+  console.log(token);
   return (
     <div className="flex flex-col">
       <Head />
@@ -70,7 +91,7 @@ export default function InputSpace() {
                       id="spaceImg1"
                       name="spaceImg1"
                       accept="image/png, image/gif, image/jpeg"
-                      className="hidden"
+                      className=""
                       required
                     />
                   </label>
@@ -85,7 +106,7 @@ export default function InputSpace() {
                       id="spaceImg2"
                       name="spaceImg2"
                       accept="image/png, image/gif, image/jpeg"
-                      className="hidden"
+                      className=""
                       required
                     />
                   </label>
@@ -100,7 +121,7 @@ export default function InputSpace() {
                       id="spaceImg3"
                       name="spaceImg3"
                       accept="image/png, image/gif, image/jpeg"
-                      className="hidden"
+                      className=""
                       required
                     />
                   </label>

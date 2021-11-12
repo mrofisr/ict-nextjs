@@ -1,7 +1,27 @@
 import Link from "next/link";
 import Head from "@/components/Head";
 import BarPetCare from "@/components/BarPetCare";
+import { authPage } from "@/middlewares/auth-page-user";
 
+
+export async function getServerSideProps (ctx) {
+  const { token } = await authPage(ctx, "user_penitipan");
+
+  if (!token) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/account/login',
+      },
+    }
+  }
+  
+  return {
+    props: {
+      token
+    }
+  }
+}
 
 export default function AccountPetcare() {
   return (

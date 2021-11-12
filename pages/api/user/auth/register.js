@@ -126,9 +126,10 @@ export default async function handler(req, res) {
 					},
 				},
 			});
+			console.log(addUserPenitipan);
 			const addedUserPenitipan =
 				await prisma.table_user_penitipan.findFirst({
-					where: { id_user: addUserPenitipan.id_user },
+					where: { id_user_penitipan: addUserPenitipan.id_user_penitipan },
 					include: { detail_user_penitipan: true },
 				});
 			return res.status(200).json({
