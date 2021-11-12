@@ -2,10 +2,21 @@ import Head from "@/components/Head";
 import Bar from "@/components/Bar";
 import Back from "@/components/Back";
 import { authPage } from "@/middlewares/auth-page-user";
+import { useState } from "react";
+
+
 
 export async function getServerSideProps (ctx){
   const { token } = await authPage(ctx, "user_penitipan");
-  
+
+  // const res = await fetch('https://petspace.vercel.app/api/space/default-form', {
+  //   headers: {
+  //     "Authorization": "Bearer " + token
+  //   }
+  // });
+  // const ress = await res.json();
+  // console.log(ress);
+
   if (!token) {
     return {
       redirect: {
@@ -14,7 +25,6 @@ export async function getServerSideProps (ctx){
       },
     }
   }
-  // console.log(token);
   return {
     props: {
       token
@@ -23,7 +33,44 @@ export async function getServerSideProps (ctx){
 }
 
 export default function InputSpace({token}) {
-  console.log(token);
+
+  const [field, setField] = useState({
+    alamat: "",
+    kota: "",
+    harga: "",
+    deskripsi: "",
+    foto_1: "",
+    foto_2: "",
+    foto_3: "",
+    jenis_hewan: "Anjing"
+  });
+
+  async function createHandler (e) {
+    e.preventDefault();
+    const createReq = await fetch('/api/space', {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + token
+      },
+
+    })
+  }
+
+  function imageHandler (e) {
+    const getName = e.target.getAttribute('name')
+    setField ({
+      ...field,
+      [getName]: e.target.files[0]
+    });
+  }
+
+  function fieldHandler (e) {
+    const getName = e.target.getAttribute('name');
+    setField({
+      ...field,
+      [getName]: e.target.value
+    });
+  }
   return (
     <div className="flex flex-col">
       <Head />
@@ -48,8 +95,9 @@ export default function InputSpace({token}) {
                   className="mt-8 font-secondary text-sm text-search-font"
                 >
                   <input
+                    onChange = {fieldHandler}
                     id="spaceName"
-                    name="spaceName"
+                    name="nama_penitipan"
                     type="text"
                     autoComplete="name"
                     placeholder="Nama Space"
@@ -58,8 +106,9 @@ export default function InputSpace({token}) {
                   />
 
                   <input
+                    onChange = {fieldHandler}
                     id="spaceRegion"
-                    name="spaceRegion"
+                    name="kota"
                     type="text"
                     autoComplete="address"
                     placeholder="Kota"
@@ -67,17 +116,22 @@ export default function InputSpace({token}) {
                     required
                   />
 
-                  <textarea
-                    name="spaceAddress"
-                    form="spaceForm"
-                    placeholder="Alamat Lengkap Space"
-                    className="px-4 py-3 mt-3 h-36 w-full text border-opacity-100 border-2 rounded-lg border-blue-secondary"
-                  ></textarea>
+                  <input
+                    onChange = {fieldHandler}
+                    id="spaceName"
+                    name="harga"
+                    type="text"
+                    autoComplete="harga"
+                    placeholder="Harga Space"
+                    className="px-4 py-3 mt-3 w-full border-opacity-100 border-2 rounded-lg border-blue-secondary"
+                    required
+                  />
 
                   <textarea
-                    name="spaceFacility"
+                    onChange = {fieldHandler}
+                    name="alamat"
                     form="spaceForm"
-                    placeholder="Fasilitas Space"
+                    placeholder="Alamat Lengkap Space"
                     className="px-4 py-3 mt-3 h-36 w-full text border-opacity-100 border-2 rounded-lg border-blue-secondary"
                   ></textarea>
 
@@ -87,9 +141,10 @@ export default function InputSpace({token}) {
                       Upload Foto Space 1
                     </span>
                     <input
+                      onChange={imageHandler}
                       type="file"
                       id="spaceImg1"
-                      name="spaceImg1"
+                      name="foto_1"
                       accept="image/png, image/gif, image/jpeg"
                       className=""
                       required
@@ -102,9 +157,10 @@ export default function InputSpace({token}) {
                       Upload Foto Space 2
                     </span>
                     <input
+                      onChange={imageHandler}
                       type="file"
                       id="spaceImg2"
-                      name="spaceImg2"
+                      name="foto_2"
                       accept="image/png, image/gif, image/jpeg"
                       className=""
                       required
@@ -117,9 +173,10 @@ export default function InputSpace({token}) {
                       Upload Foto Space 3
                     </span>
                     <input
+                      onChange={imageHandler}
                       type="file"
-                      id="spaceImg3"
-                      name="spaceImg3"
+                      id="spaceImg"
+                      name="foto_3"
                       accept="image/png, image/gif, image/jpeg"
                       className=""
                       required
@@ -127,7 +184,8 @@ export default function InputSpace({token}) {
                   </label>
 
                   <textarea
-                    name="moreSPaceInfo"
+                    onChange = {fieldHandler}
+                    name="deskripsi"
                     form="petForm"
                     placeholder="Informasi Tambahan"
                     className="px-4 py-3 mt-3 w-full text border-opacity-100 border-2 rounded-lg border-blue-secondary"
@@ -142,6 +200,7 @@ export default function InputSpace({token}) {
                   </div>
 
                   <input
+                    onClick={createHandler}
                     type="submit"
                     value="Buat Space"
                     className="mt-4 px-4 py-4 bg-blue-main text-white font-medium w-full cursor-pointer border-2 border-blue-main rounded-lg ease-linear duration-150 hover:text-blue-main hover:border-2 hover:bg-white"
