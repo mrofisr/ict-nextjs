@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useState } from "react";
 import Head from "@/components/Head";
 import Back from "@/components/Back";
 import { unAuthPage } from "@/middlewares/auth-page-user";
@@ -337,6 +338,7 @@ export default function SignUp() {
 											</a>
 										</span>
 
+<<<<<<< HEAD
 										<select
 											id="role"
 											name="role"
@@ -401,6 +403,64 @@ export default function SignUp() {
 										onClick={submitForm}
 										className="mt-10 px-4 py-3 bg-blue-main text-white font-medium w-full cursor-pointer border-2 border-blue-main rounded-lg ease-linear duration-150 hover:text-blue-main hover:border-2 hover:bg-white"
 									></input>
+=======
+                    <select
+                      id="role"
+                      name="role"
+                      className="select select-bordered w-full font-normal border-blue-secondary border-2 py-2 text-sm text-form bg-background bg-opacity-40 rounded-md pl-16 text-search-font focus:outline-none focus:ring focus:border-blue-50 bg-abu h-md border-abu "
+                      onChange={inputTextHandler}
+                      required
+                    >
+                      <option value="" disabled="disabled" selected="selected">
+                        Daftar Sebagai
+                      </option>
+                      <option value="user">Penitip</option>
+                      <option value="user_penitipan">Tempat Penitipan</option>
+                    </select>
+                  </div>
+
+                  {/* Upload foto wajah */}
+                  <label className="w-full mt-5 flex flex-col items-center bg-background  bg-opacity-40 px-4 py-6 rounded-md tracking-wide border border-blue-secondary cursor-pointer hover:bg-blue-main hover:text-white  ease-linear transition-all duration-150">
+                    <i className="fas fa-camera fa-2x"></i>
+                    <span className="mt-1 text-xs leading-normal">
+                      Foto Wajah
+                    </span>
+                    <input
+                      type="file"
+                      id="picFace"
+                      name="foto_wajah"
+                      accept="image/png, image/gif, image/jpeg"
+                      className=""
+                      onChange={inputImageHandler}
+                      required
+                    />
+                  </label>
+
+                  {/* Upload foto ktp */}
+                  <label className="w-full mt-5 flex flex-col items-center bg-background bg-opacity-40 px-4 py-6 rounded-md tracking-wide border border-blue-secondary cursor-pointer hover:bg-blue-main hover:text-white  ease-linear transition-all duration-150">
+                    <i className="fas fa-camera fa-2x"></i>
+                    <span className="mt-1 text-xs leading-normal">
+                      Foto KTP
+                    </span>
+                    <input
+                      type="file"
+                      id="picKTP"
+                      name="foto_wajah_ktp"
+                      accept="image/png, image/gif, image/jpeg"
+                      className=""
+                      onChange={inputImageHandler}
+                      required
+                    />
+                  </label>
+
+                  {/* Button Sign */}
+                  <input
+                    type="submit"
+                    value="Registrasi"
+                    onClick={submitForm}
+                    className="mt-10 px-4 py-3 bg-blue-main text-white font-medium w-full cursor-pointer border-2 border-blue-main rounded-lg ease-linear duration-150 hover:text-blue-main hover:border-2 hover:bg-white"
+                  ></input>
+>>>>>>> c755462a527ff09b3dcdcf7d5e7d4732e16dc6f6
 
 									<div className="text-center mt-5 text-sm">
 										{/*  */}

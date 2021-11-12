@@ -1,5 +1,5 @@
 import Head from "@/components/Head";
-import BarPetCare from "@/components/BarPetCare";
+import Bar from "@/components/Bar";
 
 export async function getServerSideProps (ctx) {
   const getFaq = await fetch('https://ict-nextjs.vercel.app/api/admin/faq');
@@ -54,7 +54,7 @@ export default function Help({data}) {
               </div>
             </div>
 
-            <BarPetCare currentPage="help" />
+            <Bar currentPage="help" />
           </div>
         </div>
       </div>

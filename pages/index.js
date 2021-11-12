@@ -96,7 +96,7 @@ export default function Account({semarang}) {
                     </p>
                   </div>
                   <Link href={`space?search=Semarang`}>
-                  <div className="flex font-secondary mt-6 text-sm font-normal underline cursor-pointer text-blue-main">
+                  <div className="flex font-secondary mt-7 text-xs font-semibold hover:underline cursor-pointer text-blue-main">
                     View All
                   </div>
                   </Link>
@@ -221,7 +221,7 @@ export default function Account({semarang}) {
                     </p>
                   </div>
                   <Link href={`space?search=Jakarta`}>
-                  <div className="flex font-secondary mt-6 text-sm font-normal underline cursor-pointer text-blue-main">
+                  <div className="flex font-secondary mt-7 text-xs font-semibold hover:underline cursor-pointer text-blue-main">
                     View All
                   </div>
                   </Link>

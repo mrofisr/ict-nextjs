@@ -1,11 +1,11 @@
 import Head from "next/head";
 import Link from "next/link";
 import Back from "@/components/Back";
+import Search from "@/components/Search";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { FreeMode, Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
-
 
 SwiperCore.use([FreeMode, Pagination]);
 
@@ -21,7 +21,10 @@ export default function SpaceDetails() {
           <div className="box-border bg-white max-w-md w-full mx-auto h-full">
             <div className="flex flex-col">
               <div className="relative">
-                <Back page="space-details" />
+                <div className="flex bg-white fixed z-30 max-w-md w-full px-5 pb-3 drop-shadow-bottom shadow-md">
+                  <Back page="space-details"/>
+                  <Search currentPage="space" />
+                </div>
 
                 <Swiper
                   slidesPerView={1}
@@ -103,14 +106,11 @@ export default function SpaceDetails() {
                   <div className="mt-8">
                     {/* img */}
                     <div className="flex">
-                      <img
-                        src="/logo-pabrik.png"
-                        className="w-16 h-16"
-                      ></img>
+                      <img src="/logo-pabrik.png" className="w-16 h-16"></img>
                       {/*  */}
                       <div className="mt-2">
                         <p
-                          className="mx-5 tracking-tight text-xl font-medium"
+                          className="mx-5 tracking-tight text-xl font-medium text-gray-900"
                           style={{ lineHeight: "25px" }}
                         >
                           Cantika Sinta
@@ -180,7 +180,10 @@ export default function SpaceDetails() {
                     <Link href="request/1">
                       <div className="w-full bg-blue h-lg cursor-pointer text-white border-2 border-blue-main rounded-md mt-12 hover:bg-white hover:text-blue-main hover:border-2 hover:border-blue-main duration-100">
                         <div className="content">
-                          <p className="tracking-tight  text-lg font-semibold  text-center leading-3" style={{lineHeight:"3"}}>
+                          <p
+                            className="tracking-tight  text-lg font-semibold  text-center leading-3"
+                            style={{ lineHeight: "3" }}
+                          >
                             Request Space
                           </p>
                         </div>
