@@ -12,7 +12,6 @@ SwiperCore.use([FreeMode, Pagination]);
 export async function getServerSideProps (ctx) {
   const spaceSemarang = await fetch ('https://petspace.vercel.app/api/space/by-city?city=semarang');
   const spaceSemarangRes = await spaceSemarang.json();
-  console.log(spaceSemarangRes);
 
   return {
     props: {
