@@ -11,12 +11,12 @@ export default async function handler (req, res) {
     const {id, role} = await defaultAuthApi(req, res);
     switch (role) {
         case "user":
-            const getUser = await prisma.table_user_penitipan.findUnique({
+            const getUser = await prisma.table_user.findUnique({
                 where: {
-                    id_user : id
+                    id_user: id
                 },
                 select: {
-                    id_user_penitipan: true,
+                    id_user: true,
                     nama: true,
                     email: true
                 }

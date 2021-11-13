@@ -89,7 +89,7 @@ export default function InputSpace({token}) {
   }
 
   const okButtonHandler = (e) => {
-    Router.replace("/petcare/account");
+    location,href = "/petcare/account"
   };
 
   const failButtonHandler = (e) => {

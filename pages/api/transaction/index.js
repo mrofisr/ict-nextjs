@@ -184,6 +184,7 @@ export default async function handler(req, res) {
 				tanggal_pengembalian,
 				info_tambahan,
 			} = req.body;
+
 			if (
 				!nama_hewan ||
 				!jenis_hewan ||

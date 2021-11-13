@@ -1,9 +1,45 @@
 import Link from "next/link";
 import Head from "@/components/Head";
 import Bar from "../../components/Bar";
+import Cookies from "js-cookie";
+import { authPage } from "@/middlewares/auth-page-user";
+import Router from "next/router";
 
+export async function getServerSideProps(context) {
+  const { token } = await authPage(context, "user");
+  console.log(token);
+  if (!token) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/account/login",
+      },
+    };
+  }
+  const getUser = await fetch('http://localhost:3000/api/user', {
+    headers: {
+      "Authorization": "Bearer " + token
+    }
+  });
+  const resUser = await getUser.json();
 
-export default function Account() {
+  return {
+    props: {
+      token,
+      nama: resUser.data.nama,
+      email: resUser.data.email
+    },
+  };
+}
+
+export default function Account({nama, email}) {
+  const logoutUser = (e) => {
+    e.preventDefault();
+
+    Cookies.remove("user_cookie");
+    Router.push("/");
+  };
+
   return (
     <div className="flex flex-col">
       <Head />
@@ -23,25 +59,28 @@ export default function Account() {
                   {/* Name and Email  */}
                   <div className="mb-7 mt-3 mx-5">
                     <h3 className="text-xl font-semibold tracking-tight text-gray-900">
-                      Eko Situbandar
+                      {nama}
                     </h3>
-                    <p
-                      className="tracking-tight underline text-search-font truncate"
-                    >
-                      lintangajiyogapratama@gmail.com
+                    <p className="tracking-tight underline text-search-font truncate">
+                      {email}
                     </p>
                   </div>
                 </div>
 
                 {/* Akun Setting */}
                 <div className="setting-box mt-5">
-                  <h4 className="text-lg tracking-tight font-medium text-gray-900">Pengaturan Akun</h4>
+                  <h4 className="text-lg tracking-tight font-medium text-gray-900">
+                    Pengaturan Akun
+                  </h4>
                   <div className="mt-2">
                     <hr />
                   </div>
                   {/* Button Icon Setting */}
                   <Link href="/account/change-password">
-                    <div className="mt-3 cursor-pointer" style={{ display: "flex" }}>
+                    <div
+                      className="mt-3 cursor-pointer"
+                      style={{ display: "flex" }}
+                    >
                       <img src="/setting.svg"></img>
                       <p
                         className="mx-5"
@@ -87,7 +126,7 @@ export default function Account() {
                   </a>
                 </div>
                 {/* Log out */}
-                <Link href="account/login">
+                <button className="w-full" onClick={logoutUser} href="account/login">
                   <div className=" w-full h-lg cursor-pointer text-white border-red-600 bg-red-600 border-2 rounded-md mt-10 transition-all duration-300 hover:border-red-600 hover:bg-white hover:text-red-600">
                     <div className="content">
                       <p
@@ -98,7 +137,7 @@ export default function Account() {
                       </p>
                     </div>
                   </div>
-                </Link>
+                </button>
                 {/* Version */}
                 <div className="text-right mt-2">
                   <p>PetSpace v.1.0</p>

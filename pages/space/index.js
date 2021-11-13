@@ -2,33 +2,58 @@ import Link from "next/link";
 import Head from "@/components/Head";
 import Bar from "@/components/Bar";
 import Search from "@/components/Search";
+import StatusCard from "@/components/StatusCard";
+import { useState } from "react";
 
-  export async function getServerSideProps(context) {
-    if (context.query.city) {
-      const { city } = context.query;
-      const req = await fetch('http://localhost:3000/api/space/by-city?city=' + city);
-      const {data} = await req.json();
+export async function getServerSideProps(context) {
+  if (context.query.city) {
+    const { city } = context.query;
+    console.log(city);
+    const req = await fetch(
+      "http://localhost:3000/api/space/by-city?city=" + city
+    );
+    const { data } = await req.json();
+    console.log(data);
 
-      return {
-        props: {
-          hai: "hai sayang",
-          data
-        }
-      }
-    }
-    const req = await fetch('http://localhost:3000/api/space');
-    const res = await req.json();
     return {
       props: {
-        hai: "hai",
-        data: res.data
-      }
-    }
+        data,
+      },
+    };
   }
 
-export default function Space({hai, data}) {
-  // console.log(hai);
-  // console.log(data);
+  const req = await fetch("http://localhost:3000/api/space");
+  const res = await req.json();
+  
+  return {
+    props: {
+      data: res.data,
+    },
+  };
+}
+
+export default function Space({ data }) {
+  const [allData, setAllData] = useState(data);
+  const [filteredData, setFilteredData] = useState(allData);
+  console.log(allData);
+  console.log(filteredData);
+
+  const filterHandler = (e) => {
+    if (e.target.id === "cat") {
+      setFilteredData(
+        allData.filter((space) => space.jenis_hewan === "Kucing")
+      );
+    } else if (e.target.id === "dog") {
+      setFilteredData(
+        allData.filter((space) => space.jenis_hewan === "Anjing")
+      );
+    } else {
+      setFilteredData(allData);
+    }
+
+    console.log(filteredData);
+  };
+
   return (
     <div className="flex flex-col">
       <Head />
@@ -64,11 +89,32 @@ export default function Space({hai, data}) {
                         tabIndex="0"
                         className="shadow menu dropdown-content bg-base-100 rounded-box w-52"
                       >
-                        <li className="font-secondary text-sm">
-                          <Link href="/space?pet=anjing">Anjing</Link>
+                        <li key="1" className="font-secondary text-sm">
+                          <button
+                            id="dog"
+                            onClick={filterHandler}
+                            className="py-2 hover:bg-blue-secondary active:bg-blue-secondary-hover duration-200"
+                          >
+                            Anjing
+                          </button>
                         </li>
-                        <li className="font-secondary text-sm">
-                          <Link href="/space?pet=kucing">Kucing</Link>
+                        <li key="2" className="font-secondary text-sm">
+                          <button
+                            id="cat"
+                            onClick={filterHandler}
+                            className="py-2 hover:bg-blue-secondary active:bg-blue-secondary-hover duration-200"
+                          >
+                            Kucing
+                          </button>
+                        </li>
+                        <li key="3" className="font-secondary text-sm">
+                          <button
+                            id="all"
+                            onClick={filterHandler}
+                            className="py-2 hover:bg-blue-secondary active:bg-blue-secondary-hover duration-200"
+                          >
+                            All
+                          </button>
                         </li>
                       </ul>
                     </div>
@@ -93,107 +139,37 @@ export default function Space({hai, data}) {
                 </div>
 
                 <div className="mt-16 mx-5">
-                  <Link href="space/1">
-                    <div className="flex mt-5 shadow-md rounded-lg cursor-pointer">
-                      <img src="/img.png" className="w-1/3 rounded-l-lg" loading="lazy"></img>
-                      <div className="flex flex-col text-left mx-6 my-3 w-2/3 mt-5">
-                        <h3 className="text-blue-main font-medium text-base">
-                          Abdur Rofi Maulidin
-                        </h3>
-                        <h4 className="text-yellow-pet font-medium text-sm mt-1">
-                          Rp28.000/hari
-                        </h4>
-                        <p className="text-xs font-light text-gray-500 mt-1">
-                          Kota Semarang
-                        </p>
-                      </div>
+                  {filteredData.length !== 0 ? (
+                    <div>
+                      {filteredData.map((space) => (
+                        <Link
+                          key={space.id_detail_tempat_penitipan}
+                          href={`space/${space.id_detail_tempat_penitipan}`}
+                        >
+                          <div className="flex mt-5 shadow-md rounded-lg cursor-pointer">
+                            <img
+                              src="/img.png"
+                              className="w-1/3 rounded-l-lg"
+                              loading="lazy"
+                            ></img>
+                            <div className="flex flex-col text-left mx-6 my-3 w-2/3 mt-5">
+                              <h3 className="text-blue-main font-medium text-base">
+                                {space.nama_tempat_penitipan}
+                              </h3>
+                              <h4 className="text-yellow-pet font-medium text-sm mt-1">
+                                {`Rp${space.harga}/hari`}
+                              </h4>
+                              <p className="text-xs font-light text-gray-500 mt-1">
+                                {space.kota}
+                              </p>
+                            </div>
+                          </div>
+                        </Link>
+                      ))}
                     </div>
-                  </Link>
-
-                  <Link href="space/1">
-                    <div className="flex mt-5 shadow-md rounded-lg cursor-pointer">
-                      <img src="/img.png" className="w-1/3 rounded-l-lg" loading="lazy"></img>
-                      <div className="flex flex-col text-left mx-6 my-3 w-2/3 mt-5">
-                        <h3 className="text-blue-main font-medium text-base">
-                          Abdur Rofi Maulidin
-                        </h3>
-                        <h4 className="text-yellow-pet font-medium text-sm mt-1">
-                          Rp28.000/hari
-                        </h4>
-                        <p className="text-xs font-light text-gray-500 mt-1">
-                          Kota Semarang
-                        </p>
-                      </div>
-                    </div>
-                  </Link>
-
-                  <Link href="space/1">
-                    <div className="flex mt-5 shadow-md rounded-lg cursor-pointer">
-                      <img src="/img.png" className="w-1/3 rounded-l-lg" loading="lazy"></img>
-                      <div className="flex flex-col text-left mx-6 my-3 w-2/3 mt-5">
-                        <h3 className="text-blue-main font-medium text-base">
-                          Abdur Rofi Maulidin
-                        </h3>
-                        <h4 className="text-yellow-pet font-medium text-sm mt-1">
-                          Rp28.000/hari
-                        </h4>
-                        <p className="text-xs font-light text-gray-500 mt-1">
-                          Kota Semarang
-                        </p>
-                      </div>
-                    </div>
-                  </Link>
-
-                  <Link href="space/1">
-                    <div className="flex mt-5 shadow-md rounded-lg cursor-pointer">
-                      <img src="/img.png" className="w-1/3 rounded-l-lg" loading="lazy"></img>
-                      <div className="flex flex-col text-left mx-6 my-3 w-2/3 mt-5">
-                        <h3 className="text-blue-main font-medium text-base">
-                          Abdur Rofi Maulidin
-                        </h3>
-                        <h4 className="text-yellow-pet font-medium text-sm mt-1">
-                          Rp28.000/hari
-                        </h4>
-                        <p className="text-xs font-light text-gray-500 mt-1">
-                          Kota Semarang
-                        </p>
-                      </div>
-                    </div>
-                  </Link>
-
-                  <Link href="space/1">
-                    <div className="flex mt-5 shadow-md rounded-lg cursor-pointer">
-                      <img src="/img.png" className="w-1/3 rounded-l-lg" loading="lazy"></img>
-                      <div className="flex flex-col text-left mx-6 my-3 w-2/3 mt-5">
-                        <h3 className="text-blue-main font-medium text-base">
-                          Abdur Rofi Maulidin
-                        </h3>
-                        <h4 className="text-yellow-pet font-medium text-sm mt-1">
-                          Rp28.000/hari
-                        </h4>
-                        <p className="text-xs font-light text-gray-500 mt-1">
-                          Kota Semarang
-                        </p>
-                      </div>
-                    </div>
-                  </Link>
-
-                  <Link href="space/1">
-                    <div className="flex mt-5 shadow-md rounded-lg cursor-pointer">
-                      <img src="/img.png" className="w-1/3 rounded-l-lg" loading="lazy"></img>
-                      <div className="flex flex-col text-left mx-6 my-3 w-2/3 mt-5">
-                        <h3 className="text-blue-main font-medium text-base">
-                          Abdur Rofi Maulidin
-                        </h3>
-                        <h4 className="text-yellow-pet font-medium text-sm mt-1">
-                          Rp28.000/hari
-                        </h4>
-                        <p className="text-xs font-light text-gray-500 mt-1">
-                          Kota Semarang
-                        </p>
-                      </div>
-                    </div>
-                  </Link>
+                  ) : (
+                    <StatusCard pet="blank" user="user_penitipan" />
+                  )}
                 </div>
               </div>
             </div>

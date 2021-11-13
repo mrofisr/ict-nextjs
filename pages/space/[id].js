@@ -7,9 +7,24 @@ import SwiperCore, { FreeMode, Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 
+export async function getServerSideProps(context) {
+  const {id} = context.query;
+  console.log(id);
+
+  const req = await fetch(`https://petspace.vercel.app/api/space/detail?id=${id}`);
+  const res = await req.json()
+
+  const data = res.data
+  console.log(data)
+  return {
+    props: { data }
+  }
+
+}
+
 SwiperCore.use([FreeMode, Pagination]);
 
-export default function SpaceDetails() {
+export default function SpaceDetails({ data }) {
   return (
     <div className="flex flex-col">
       <Head>
@@ -86,7 +101,7 @@ export default function SpaceDetails() {
               >
                 <div className="mx-5 my-7">
                   <h4 className="text-3xl tracking-tight font-semibold text-blue-main">
-                    Penitipan Hewan Cantika
+                    {data.nama_tempat_penitipan}
                   </h4>
                   {/* Location */}
                   <div className="flex mt-5">
@@ -98,7 +113,7 @@ export default function SpaceDetails() {
                         lineHeight: "25px",
                       }}
                     >
-                      Semarang
+                      {data.kota}
                     </p>
                   </div>
 
@@ -113,7 +128,7 @@ export default function SpaceDetails() {
                           className="mx-5 tracking-tight text-xl font-medium text-gray-900"
                           style={{ lineHeight: "25px" }}
                         >
-                          Cantika Sinta
+                          {data.nama}
                         </p>
                         {/*  */}
                         <p
@@ -138,8 +153,7 @@ export default function SpaceDetails() {
                       className="tracking-tight text-md mt-3"
                       style={{ color: "rgba(66, 62, 62, 0.7)" }}
                     >
-                      Jl. Raya Nganjuk nomor 2, RT 13 RW 01, Kecamatan Ngaliyan,
-                      Kota Semarang, Jawa Tengah.
+                      {data.alamat}
                     </p>
                   </div>
 
@@ -155,7 +169,7 @@ export default function SpaceDetails() {
                       className="tracking-tight text-md mt-3"
                       style={{ color: "rgba(66, 62, 62, 0.7)" }}
                     >
-                      Fasilitas: Kandang, Makanan, Obat-obatan, Grooming, Mainan
+                      {data.deskripsi}
                     </p>
                   </div>
 
@@ -171,7 +185,7 @@ export default function SpaceDetails() {
                       className="tracking-tight text-md mt-3"
                       style={{ color: "rgba(66, 62, 62, 0.7)" }}
                     >
-                      Anjing dan Kucing
+                      {data.jenis_hewan}
                     </p>
                   </div>
 

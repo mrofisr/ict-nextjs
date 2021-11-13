@@ -6,16 +6,11 @@ import { authPage } from "@/middlewares/auth-page-user";
 export async function getServerSideProps(context) {
   const { token } = await authPage(context, "user_penitipan");
 
-
-  const req = await fetch(
-    "https://petspace.vercel.app/api/transaction",
-    {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    }
-  );
-  
+  const req = await fetch("https://petspace.vercel.app/api/transaction", {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
   const res = await req.json();
   console.log(res);
 
@@ -30,12 +25,12 @@ export async function getServerSideProps(context) {
   return {
     props: {
       res,
+      token,
     },
   };
 }
 
-export default function SpacePetCare({ res }) {
-  
+export default function SpacePetCare({ res, token }) {
   return (
     <div className="flex flex-col">
       <Head />
@@ -69,6 +64,8 @@ export default function SpacePetCare({ res }) {
                     return (
                       <StatusCard
                         key={status.id_transaksi}
+                        id={status.id_transaksi}
+                        token={token}
                         pet="dog"
                         petName={status.nama_hewan}
                         personName={status.nama_penitip}
@@ -81,6 +78,8 @@ export default function SpacePetCare({ res }) {
                     return (
                       <StatusCard
                         key={status.id_transaksi}
+                        id={status.id_transaksi}
+                        token={token}
                         pet="cat"
                         petName={status.nama_hewan}
                         personName={status.nama_penitip}

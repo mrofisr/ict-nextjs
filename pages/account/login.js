@@ -34,36 +34,45 @@ export default function Login() {
 		password: "",
 	});
 
-	async function loginUser(e) {
-		e.preventDefault();
-		const login = await fetch("/api/user/auth/login?role=user", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(fields),
-		});
-		const loginRes = await login.json();
-		if (!login.ok) return console.log(`error ${loginRes.message}`);
-		Cookies.set("user_cookie", loginRes.data.token);
-		Router.push("/");
-	}
+  async function loginUser(e) {
+    e.preventDefault();
+    const login = await fetch("/api/user/auth/login?role=user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(fields),
+    });
+    const loginRes = await login.json();
+    if (!login.ok) {
+      document.getElementById("modal-failed").classList.remove("hidden");
+      return;
+    }
 
-	async function loginUserPenitipan(e) {
-		e.preventDefault();
-		const login = await fetch("/api/user/auth/login?role=user_penitipan", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(fields),
-		});
-		const loginRes = await login.json();
-		if (!login.ok) {
-			document.getElementById("modal-failed").classList.remove("hidden");
-			return;
-		}
-		Cookies.set("user_penitipan_cookie", loginRes.data.token);
+    Cookies.set("user_cookie", loginRes.data.token);
+
+    if (loginRes.succes) {
+      document.getElementById("modal-acc").classList.remove("hidden");
+      return;
+    }
+  }
+
+  async function loginUserPenitipan(e) {
+    e.preventDefault();
+    const login = await fetch("/api/user/auth/login?role=user_penitipan", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(fields),
+    });
+    const loginRes = await login.json();
+    if (!login.ok) {
+      document.getElementById("modal-failed").classList.remove("hidden");
+      return;
+    }
+    
+    Cookies.set("user_penitipan_cookie", loginRes.data.token);
 
 		if (loginRes.succes) {
 			document.getElementById("modal-acc").classList.remove("hidden");
