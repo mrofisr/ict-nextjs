@@ -3,6 +3,7 @@ import { useState } from "react";
 import Head from "@/components/Head";
 import Back from "@/components/Back";
 import { unAuthPage } from "@/middlewares/auth-page-user";
+import { Router } from "next/router";
 
 export async function getServerSideProps(ctx) {
   const { token_user, token_user_penitipan } = await unAuthPage(ctx);
@@ -65,6 +66,7 @@ export default function SignUp() {
 
     if (res.succes) {
       document.getElementById("modal-acc").classList.remove("hidden");
+      return
     }
 
     document.getElementById("modal-failed").classList.remove("hidden");
@@ -89,11 +91,11 @@ export default function SignUp() {
   };
 
   const okButtonHandler = (e) => {
-    location.href = "/account/login";
+    location.href = "/petcare/space"
   };
 
   const failButtonHandler = (e) => {
-    location.href = "/account/signup";
+    document.getElementById("modal-failed").classList.add("hidden");
   }
 
   return (
@@ -121,7 +123,7 @@ export default function SignUp() {
                   </p>
                 </div>
                 {/* Form  */}
-                <form className="mt-10">
+                <form action="javascript:void(0);" className="mt-10">
                   {/* Masukkan nama */}
                   <div className="relative mt-5">
                     <span className="absolute inset-y-0 left-0 flex items-center pl-2">

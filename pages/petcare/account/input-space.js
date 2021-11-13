@@ -15,17 +15,6 @@ export async function getServerSideProps (ctx){
   //     "Authorization": "Bearer " + token
   //   }
   // });
-  // const ress = await res.json();
-  // console.log(ress);
-  // const res = await fetch('https://petspace-admin.vercel.app/api/admin/count', {
-  //   headers:{
-  //     "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtYSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2MzY2ODk2MzIsImV4cCI6MTYzNzI5NDQzMn0.7kAfyf-85MuSkBGougRTgAdqb6FyNuFux5-eH2k-1eQ"
-  //   }
-  // }
-  // );
-  // console.log(res)
-  // const data = await res.json();
-  // console.log(data);
 
   if (!token) {
     return {
@@ -65,7 +54,6 @@ export default function InputSpace({token}) {
     const hewan_1 = (checkbox.hewan_1) ? "Anjing" : "";
     const hewan_2 = (checkbox.hewan_2) ? "Kucing" : "";
     const pet = `${hewan_1} ${hewan_2}`;
-    console.log(pet);
     if(pet.startsWith('Anjing K')) {
 
       pet = pet.replace(' ', ',')
@@ -93,11 +81,7 @@ export default function InputSpace({token}) {
       body: formData
     });
     const createRes = await createReq.json();
-    // if (!createReq.ok) return console.log("Error Bos");
-    console.log(createRes);
-    console.log(createRes.succes);
     if (createRes.succes) {
-      console.log("hallo")
       document.getElementById("modal-acc").classList.remove("hidden");
       return;
     }
@@ -105,7 +89,7 @@ export default function InputSpace({token}) {
   }
 
   const okButtonHandler = (e) => {
-    Router.replace("/petcare/account")
+    Router.replace("/petcare/account");
   };
 
   const failButtonHandler = (e) => {
@@ -155,7 +139,8 @@ export default function InputSpace({token}) {
                 </p>
 
                 <form
-                  action="POST"
+                  // action="POST"
+                  method= "POST"
                   id="spaceForm"
                   className="mt-8 font-secondary text-sm text-search-font"
                 >

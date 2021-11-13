@@ -85,7 +85,8 @@ export default function Login() {
 	};
 
 	const failButtonHandler = (e) => {
-		document.getElementById("modal-failed").classList.add("hidden");
+		e.preventDefault();
+			document.getElementById("modal-failed").classList.add("hidden");
 	};
 
 	return (
