@@ -10,8 +10,18 @@ import "swiper/css/pagination";
 SwiperCore.use([FreeMode, Pagination]);
 
 export async function getServerSideProps (ctx) {
-  const spaceSemarang = await fetch ('https://petspace.vercel.app/api/space/by-city?city=semarang');
+  const spaceSemarang = await fetch ('http://localhost:3000/api/space/by-city?city=semarang');
+  console.log(spaceSemarang);
   const spaceSemarangRes = await spaceSemarang.json();
+
+  const req = await fetch("http://localhost:3000/api/transaction?jenis=anjing",{
+    headers: {
+      "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsIm5hbWEiOiJMaW50YW5nIFByYXRhbWEiLCJlbWFpbCI6ImxpbnRhbmdhaml5b2dhcHJhdGFtYUBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTYzNjc2NTQ5NCwiZXhwIjoxNjM3MzcwMjk0fQ.mSz0Txa8FfvHgAhJJ-6crwLXjZfBq_XsYED_vNn6Qdw",
+    },
+  });
+  // console.log(req);
+  const res = await req.json();
+  // console.log(res);
 
   return {
     props: {
