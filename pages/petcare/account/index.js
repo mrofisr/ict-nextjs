@@ -4,11 +4,10 @@ import BarPetCare from "@/components/BarPetCare";
 import { authPage } from "@/middlewares/auth-page-user";
 import Cookies from "js-cookie";
 import Router from "next/router";
-
+import { useEffect, useState } from "react";
 
 export async function getServerSideProps(ctx) {
   const { token } = await authPage(ctx, "user_penitipan");
-  console.log(token);
   if (!token) {
     return {
       redirect: {
@@ -17,15 +16,47 @@ export async function getServerSideProps(ctx) {
       },
     }
   }
-  
+
+  const getUser = await fetch('http://localhost:3000/api/user', {
+    headers: {
+      "Authorization": "Bearer " + token
+    }
+  });
+  const getValidation = await fetch ('http://localhost:3000/api/space/validation-user', {
+    headers: {
+      "Authorization": "Bearer " + token
+    }
+  });
+  const {data: {nama, email}} = await getUser.json();
+  const resValidation = await getValidation.json();
   return {
     props: {
-      token
+      token,
+      user: {
+        nama,
+        email,
+        validation: resValidation.data.validation,
+      },
+      id: resValidation.data.id_detail_tempat_penitipan
     }
   }
 }
 
-export default function AccountPetcare() {
+export default function AccountPetcare({token, user, id}) {
+  const [validation, setValidation] = useState(user.validation);
+
+  const deleteSpace = async (e) => {
+    console.log(validation);
+    const delReq = await fetch('/api/space?id=' + id, {
+      method: "DELETE",
+      headers: {
+        "Authorization": "Bearer " + token
+      }
+    });
+    const delRes = await delReq.json();
+    if (!delReq.ok) return console.log("Error nih bos");
+    setValidation(false);
+  }
 
   const logoutUser = (e) => {
     e.preventDefault()
@@ -55,12 +86,12 @@ export default function AccountPetcare() {
                   {/* Name and Email  */}
                   <div className="mb-7 mt-3 mx-5">
                     <h3 className="text-xl font-semibold tracking-tight text-gray-900">
-                      Eko Situbandar
+                      {user.nama}
                     </h3>
                     <p
                       className="tracking-tight underline text-search-font truncate"
                     >
-                      lintangajiyogapratama@gmail.com
+                      {user.email}
                     </p>
                   </div>
                 </div>
@@ -92,8 +123,9 @@ export default function AccountPetcare() {
                   <div className="mt-2">
                     <hr />
                   </div>
-
+                  
                   {/* Button Input Space */}
+                  { !validation ?
                   <Link href="/petcare/account/input-space">
                     <div className="mt-3 cursor-pointer" style={{ display: "flex" }}>
                       <img src="/setting.svg"></img>
@@ -105,6 +137,18 @@ export default function AccountPetcare() {
                       </p>
                     </div>
                   </Link>
+                  :           
+                  <div  onClick={deleteSpace} className="mt-3 cursor-pointer" style={{ display: "flex" }}>
+                    <img className="w-5 opacity-40" src="/delete.svg"></img>
+                    <p
+                      className="mx-5"
+                      style={{ color: "rgba(124, 124, 128, 0.8)" }}
+                    >
+                      Hapus Data Tempat Penitipan
+                    </p>
+                  </div>
+                }
+
                 </div>
 
                 {/* Kontak Kami */}
