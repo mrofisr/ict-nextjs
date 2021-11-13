@@ -3,7 +3,32 @@ import Head from "@/components/Head";
 import Bar from "@/components/Bar";
 import Search from "@/components/Search";
 
-export default function Space() {
+  export async function getServerSideProps(context) {
+    if (context.query.city) {
+      const { city } = context.query;
+      const req = await fetch('http://localhost:3000/api/space/by-city?city=' + city);
+      const {data} = await req.json();
+
+      return {
+        props: {
+          hai: "hai sayang",
+          data
+        }
+      }
+    }
+    const req = await fetch('http://localhost:3000/api/space');
+    const res = await req.json();
+    return {
+      props: {
+        hai: "hai",
+        data: res.data
+      }
+    }
+  }
+
+export default function Space({hai, data}) {
+  // console.log(hai);
+  // console.log(data);
   return (
     <div className="flex flex-col">
       <Head />
