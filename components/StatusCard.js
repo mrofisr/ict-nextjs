@@ -1,7 +1,42 @@
 import Link from "next/link";
 import Head from "@/components/Head";
+import router from "next/router";
+
 
 export default function StatusCard(props) {
+
+  const declineHandler = async (e) => {
+    e.preventDefault();
+
+    const req = await fetch(
+      `http://localhost:3000/api/transaction?id_transaksi=${props.id}&action=decline`, {
+        method: 'PUT',
+        headers: {
+          Authorization: "Bearer " + props.token,
+        }
+      }
+    );
+    const res = await req.json();
+    console.log(res);
+    router.reload();
+  };
+
+  const acceptHandler = async (e) => {
+    e.preventDefault();
+
+    const req = await fetch(
+      `http://localhost:3000/api/transaction?id_transaksi=${props.id}&action=accepted`, {
+        method: 'PUT',
+        headers: {
+          Authorization: "Bearer " + props.token,
+        }
+      }
+    );
+    const res = await req.json();
+    console.log(res);
+    router.reload();
+  };
+
   if (props.pet === "blank") {
     return (
       <div className="flex flex-col justify-center rounded-xl items-center text-center px-4 py-7 mt-10 md:py-10">
@@ -19,7 +54,13 @@ export default function StatusCard(props) {
           </div>
 
           <Link href="/space">
-            <button className={props.user === 'user_penitipan'? 'hidden' : "py-2.5 w-36 text-white text-xs bg-blue-main rounded-lg mt-8 md:text-sm mx-auto"}>
+            <button
+              className={
+                props.user === "user_penitipan"
+                  ? "hidden"
+                  : "py-2.5 w-36 text-white text-xs bg-blue-main rounded-lg mt-8 md:text-sm mx-auto"
+              }
+            >
               <a>Browse Space</a>
             </button>
           </Link>
@@ -53,21 +94,41 @@ export default function StatusCard(props) {
           </div>
 
           {props.user === "user" ? (
-            <button
-              className="py-2.5 w-36 text-white font-medium bg-yellow-pet rounded-xl mt-3 md:text-sm mx-auto"
-              style={{ fontSize: "15px", width: "180px" }}
-            >
-              <a
-                href={`https://api.whatsapp.com/send?phone=6285591639594&text=Test`}
-              >
-                Chat via WhatsApp
-              </a>
-            </button>
+            <div>
+              {props.status === "Accepted" ? (
+                <a
+                  href={`https://api.whatsapp.com/send?phone=${props.phone}&text=Test`}
+                  target="_blank"
+                >
+                  <button
+                    className={
+                      props.status === "Accepted"
+                        ? "py-2.5 w-36 text-white font-medium bg-yellow-pet rounded-xl mt-3 md:text-sm mx-auto"
+                        : "py-2.5 w-36 text-white font-medium bg-yellow-pet rounded-xl mt-3 md:text-sm mx-auto cursor-not-allowed"
+                    }
+                    style={{ fontSize: "15px", width: "180px" }}
+                  >
+                    Chat via WhatsApp
+                  </button>
+                </a>
+              ) : (
+                <button
+                  className={
+                    props.status === "Accepted"
+                      ? "py-2.5 w-36 text-white font-medium bg-yellow-pet rounded-xl mt-3 md:text-sm mx-auto"
+                      : "py-2.5 w-36 text-white font-medium bg-yellow-pet rounded-xl mt-3 md:text-sm mx-auto cursor-not-allowed"
+                  }
+                  style={{ fontSize: "15px", width: "180px" }}
+                >
+                  Chat via WhatsApp
+                </button>
+              )}
+            </div>
           ) : (
             <div className="flex flex-row">
-              {props.status === "Declined" ? (
+              {props.status === "Decline" ? (
                 <button
-                  className="py-2.5 w-36 text-white font-medium bg-red-600 rounded-xl mt-3 md:text-sm mx-auto duration-200"
+                  className="py-2.5 w-36 text-white font-medium bg-red-700 rounded-xl mt-3 md:text-sm mx-auto duration-200"
                   style={{ fontSize: "15px", width: "180px" }}
                 >
                   Declined
@@ -82,6 +143,7 @@ export default function StatusCard(props) {
               ) : (
                 <div className="flex w-full">
                   <button
+                    onClick={declineHandler}
                     className="py-2.5 w-36 mr-3 text-white font-medium bg-red-500 rounded-xl mt-3 md:text-sm mx-auto hover:bg-red-700 duration-200"
                     style={{ fontSize: "15px", width: "180px" }}
                   >
@@ -89,6 +151,7 @@ export default function StatusCard(props) {
                   </button>
 
                   <button
+                    onClick={acceptHandler}
                     className="py-2.5 w-36 text-white font-medium bg-yellow-pet rounded-xl hover:bg-yellow-pet-hover duration-200 mt-3 md:text-sm mx-auto"
                     style={{ fontSize: "15px", width: "180px" }}
                   >

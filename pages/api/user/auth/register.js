@@ -83,7 +83,6 @@ export default async function handler(req, res) {
 						create: [
 							{
 								no_ktp: nik,
-								no_telp: no_hp,
 								alamat: alamat,
 								tanggal_lahir: `${tanggal_lahir}T14:21:00+02:00`,
 								url_foto_selfie_ktp: foto_wajah_ktp.path,
