@@ -32,19 +32,24 @@ export default async function handler(req, res) {
 										jenis_hewan,
 										jenis_kelamin_hewan,
 										status_penitipan,
-										table_user: { nama },
+										tanggal_penitipan,
+										tanggal_pengembalian,
+										// table_user: { nama },
+										table_user_penitipan: {nama}
 									} = transaction;
 									const { no_telp } =
 										transaction.table_user_penitipan
 											.detail_user_penitipan[0];
 									return {
 										id_transaksi,
-										nama_penitip: nama,
+										nama_pemilik_penitipan: nama,
 										nama_hewan,
 										jenis_hewan,
 										jenis_kelamin_hewan,
 										status_penitipan,
 										no_telp_tempat_penitipan: no_telp,
+										tanggal_penitipan,
+										tanggal_pengembalian
 									};
 								}
 							);
@@ -73,18 +78,23 @@ export default async function handler(req, res) {
 										jenis_hewan,
 										jenis_kelamin_hewan,
 										status_penitipan,
-										table_user: { nama },
+										tanggal_penitipan,
+										tanggal_pengembalian,
+										// table_user: { nama },
+										table_user_penitipan: {nama}
 									} = transaction;
 									const { no_telp } =
 										transaction.table_user_penitipan
 											.detail_user_penitipan[0];
 									return {
 										id_transaksi,
-										nama_penitip: nama,
+										nama_pemilik_penitipan: nama,
 										nama_hewan,
 										jenis_hewan,
 										jenis_kelamin_hewan,
 										status_penitipan,
+										tanggal_penitipan,
+										tanggal_pengembalian,
 										no_telp_tempat_penitipan: no_telp,
 									};
 								}
