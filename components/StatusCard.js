@@ -9,7 +9,7 @@ export default function StatusCard(props) {
     e.preventDefault();
 
     const req = await fetch(
-      `http://localhost:3000/api/transaction?id_transaksi=${props.id}&action=decline`, {
+      `https://petspace.vercel.app/api/transaction?id_transaksi=${props.id}&action=decline`, {
         method: 'PUT',
         headers: {
           Authorization: "Bearer " + props.token,
@@ -25,7 +25,7 @@ export default function StatusCard(props) {
     e.preventDefault();
 
     const req = await fetch(
-      `http://localhost:3000/api/transaction?id_transaksi=${props.id}&action=accepted`, {
+      `https://petspace.vercel.app/api/transaction?id_transaksi=${props.id}&action=accepted`, {
         method: 'PUT',
         headers: {
           Authorization: "Bearer " + props.token,

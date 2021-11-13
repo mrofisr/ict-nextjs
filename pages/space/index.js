@@ -10,7 +10,7 @@ export async function getServerSideProps(context) {
     const { city } = context.query;
     console.log(city);
     const req = await fetch(
-      "http://localhost:3000/api/space/by-city?city=" + city
+      "https://petspace.vercel.app/api/space/by-city?city=" + city
     );
     const { data } = await req.json();
     console.log(data);
@@ -22,7 +22,7 @@ export async function getServerSideProps(context) {
     };
   }
 
-  const req = await fetch("http://localhost:3000/api/space");
+  const req = await fetch("https://petspace.vercel.app/api/space");
   const res = await req.json();
   
   return {

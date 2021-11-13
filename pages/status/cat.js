@@ -14,7 +14,7 @@ export async function getServerSideProps(context) {
       },
     }
   }
-  const req = await fetch("http://localhost:3000/api/transaction?jenis=kucing",{
+  const req = await fetch("https://petspace.vercel.app/api/transaction?jenis=kucing",{
       headers: {
         "Authorization": "Bearer " + token,
       },

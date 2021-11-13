@@ -16,7 +16,7 @@ export async function getServerSideProps(context) {
       },
     };
   }
-  const getUser = await fetch('http://localhost:3000/api/user', {
+  const getUser = await fetch('https://petspace.vercel.app/api/user', {
     headers: {
       "Authorization": "Bearer " + token
     }
