@@ -20,7 +20,7 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default function ChangePasswordPetCare({ token, nama, email }) {
+export default function ChangePasswordPetCare({ token}) {
   const [inputField, setInputField] = useState({
     password: "",
     new_password: "",
