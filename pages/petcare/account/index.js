@@ -17,12 +17,12 @@ export async function getServerSideProps(ctx) {
     }
   }
 
-  const getUser = await fetch('http://localhost:3000/api/user', {
+  const getUser = await fetch('https://petspace.vercel.app/api/user', {
     headers: {
       "Authorization": "Bearer " + token
     }
   });
-  const getValidation = await fetch ('http://localhost:3000/api/space/validation-user', {
+  const getValidation = await fetch ('https://petspace.vercel.app/api/space/validation-user', {
     headers: {
       "Authorization": "Bearer " + token
     }

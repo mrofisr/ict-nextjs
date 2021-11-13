@@ -38,7 +38,7 @@ export default function ChangePasswordPetCare({ token }) {
     e.preventDefault();
 
     const req = await fetch(
-      "http://localhost:3000/api/user/auth/change-password",
+      "https://petspace.vercel.app/api/user/auth/change-password",
       {
         method: "PUT",
         headers: {
