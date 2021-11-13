@@ -6,7 +6,6 @@ import { authPage } from "@/middlewares/auth-page-user";
 export async function getServerSideProps(context) {
   const { token } = await authPage(context, "user_penitipan");
 
-  console.log(context.res);
 
   const req = await fetch(
     "https://petspace.vercel.app/api/transaction",
