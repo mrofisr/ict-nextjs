@@ -84,7 +84,7 @@ export default async function handler(req, res) {
 		// })
 
 		case "DELETE":
-			const auth_admin = await authApi(req, res, "admin");
+			const auth_user_penitipan = await authApi(req, res, "user_penitipan");
 			const { id } = req.query;
 			if (!id)
 				return res.status(404).json({

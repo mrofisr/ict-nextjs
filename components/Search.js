@@ -24,7 +24,7 @@ export default function Search(props) {
           <div className="flex">
             <input
               type="text"
-              name="search"
+              name="city"
               id="search"
               className={
                 props.currentPage === "home"
