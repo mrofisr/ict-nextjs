@@ -16,7 +16,7 @@ export async function getServerSideProps(ctx) {
   const spaceSemarangRes = await spaceSemarang.json();
 
   const spaceJakarta = await fetch(
-    "https://petspace.vercel.app/api/space/by-city?city=semarang"
+    "https://petspace.vercel.app/api/space/by-city?city=jakarta"
   );
   const spaceJakartaRes = await spaceJakarta.json();
 
@@ -142,7 +142,7 @@ export default function Account({ semarang, jakarta }) {
                       key={space.id_user_tempat_penitipan}
                       className="text-center bg-white shadow-md rounded-xl h-full border-2 cursor-pointer"
                     >
-                      <Link href="space/1">
+                      <Link href={`space/${space.id_detail_tempat_penitipan}`}>
                         <div className="flex flex-col">
                           <img
                             src="/img.png"
@@ -270,7 +270,7 @@ export default function Account({ semarang, jakarta }) {
                       key={space.id_user_tempat_penitipan}
                       className="text-center bg-white shadow-md rounded-xl h-full border-2 cursor-pointer"
                     >
-                      <Link href="space/1">
+                      <Link href={`space/${space.id_detail_tempat_penitipan}`}>
                         <div className="flex flex-col">
                           <img
                             src="/img.png"
