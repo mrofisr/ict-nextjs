@@ -1,10 +1,29 @@
 import Head from "next/head";
 import Back from '@/components/Back';
 import StatusCard from "@/components/StatusCard";
+import { authPage } from "@/middlewares/auth-page-user";
 
 
-export default function Cat() {
-  const name = 'Lintang';
+export async function getServerSideProps(context) {
+  const { token } = await authPage(context, "user")
+  console.log(token)
+  const req = await fetch("http://localhost:3000/api/transaction?jenis=kucing",{
+      headers: {
+        "Authorization": "Bearer " + token,
+      },
+  });
+  console.log(req);
+  const res = await req.json();
+
+  console.log(res);
+  return {
+    props: {
+      data: res.data,
+    },
+  };
+}
+
+export default function Cat({ data }) {
 
   return (
     <div className="flex flex-col">
@@ -38,7 +57,10 @@ export default function Cat() {
                   </p>
                 </div>
 
-                <StatusCard user="user" pet="cat" petName="Kitty" personName="Lintang Pratama" dateIn="12 November 2021" dateOut="16 November 2021" status="accepted" />
+                {data.map((transaction) => (
+                  <StatusCard user="user" pet="cat" petName={transaction.nama_hewan} personName={transaction.nama_penitip} dateIn="12 November 2021" dateOut="16 November 2021" status={transaction.status_penitipan} phone={transaction.no_telp_tempat_penitipan} />
+                ))}
+
                 
                 <div className="h-24 w-full"></div>
               </div>

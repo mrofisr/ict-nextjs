@@ -44,9 +44,17 @@ export default function Login() {
       body: JSON.stringify(fields),
     });
     const loginRes = await login.json();
-    if (!login.ok) return console.log(`error ${loginRes.message}`);
+    if (!login.ok) {
+      document.getElementById("modal-failed").classList.remove("hidden");
+      return;
+    }
+
     Cookies.set("user_cookie", loginRes.data.token);
-    Router.push("/");
+
+    if (loginRes.succes) {
+      document.getElementById("modal-acc").classList.remove("hidden");
+      return;
+    }
   }
 
   async function loginUserPenitipan(e) {
@@ -63,6 +71,7 @@ export default function Login() {
       document.getElementById("modal-failed").classList.remove("hidden");
       return;
     }
+    
     Cookies.set("user_penitipan_cookie", loginRes.data.token);
 
     if (loginRes.succes) {
