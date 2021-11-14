@@ -4,7 +4,9 @@ import BarPetCare from "@/components/BarPetCare";
 import { authPage } from "@/middlewares/auth-page-user";
 import Cookies from "js-cookie";
 import Router from "next/router";
-import { useEffect, useState } from "react";
+import pkg from 'react';
+
+const { useEffect, useState } = pkg;
 
 export async function getServerSideProps(ctx) {
   const { token } = await authPage(ctx, "user_penitipan");

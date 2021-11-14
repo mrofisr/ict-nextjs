@@ -1,10 +1,10 @@
 import Head from "@/components/Head";
-import Bar from "@/components/Bar";
 import Back from "@/components/Back";
 import { authPage } from "@/middlewares/auth-page-user";
 import { useState, useEffect } from "react";
-import  Router  from "next/router";
+// import pkg from 'react';
 
+// const { useState, useEffect } = pkg;
 
 
 export async function getServerSideProps (ctx){
@@ -38,9 +38,9 @@ export default function InputSpace({token}) {
     kota: "",
     harga: "",
     deskripsi: "",
-    foto_1: "",
-    foto_2: "",
-    foto_3: "",
+    // foto_1: "",
+    // foto_2: "",
+    // foto_3: "",
     jenis_hewan: ""
   });
 
@@ -185,7 +185,7 @@ export default function InputSpace({token}) {
                     className="px-4 py-3 mt-3 h-36 w-full text border-opacity-100 border-2 rounded-lg border-blue-secondary"
                   ></textarea>
 
-                  <label className="w-full mt-3 flex flex-col items-center px-4 py-6 border-2 bg-white rounded-md tracking-wide border-blue-secondary cursor-pointer hover:bg-blue-main hover:text-white  ease-linear transition-all duration-150">
+                  {/* <label className="w-full mt-3 flex flex-col items-center px-4 py-6 border-2 bg-white rounded-md tracking-wide border-blue-secondary cursor-pointer hover:bg-blue-main hover:text-white  ease-linear transition-all duration-150">
                     <i className="fas fa-camera fa-2x"></i>
                     <span className="mt-1 text-xs leading-normal">
                       Upload Foto Space 1
@@ -231,7 +231,7 @@ export default function InputSpace({token}) {
                       className=""
                       required
                     />
-                  </label>
+                  </label> */}
 
                   <textarea
                     onChange = {fieldHandler}
@@ -387,7 +387,6 @@ export default function InputSpace({token}) {
               </div>
             </div>
 
-            <Bar />
             <div className="w-full h-14"></div>
           </div>
         </div>

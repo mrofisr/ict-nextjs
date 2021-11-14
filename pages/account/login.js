@@ -223,9 +223,7 @@ export default function Login() {
 													</h3>
 													<div className="mt-2 px-7 py-3">
 														<p className="text-sm text-gray-500">
-															Account has been
-															successfully
-															registered!
+															Login telah berhasil!
 														</p>
 													</div>
 													<div className="items-center px-4 py-3">
@@ -272,8 +270,7 @@ export default function Login() {
 													</h3>
 													<div className="mt-2 px-7 py-3">
 														<p className="text-sm text-gray-500">
-															Account failed to
-															registered!
+															Coba cek email dan passwordmu kembali!
 														</p>
 													</div>
 													<div className="items-center px-4 py-3">
