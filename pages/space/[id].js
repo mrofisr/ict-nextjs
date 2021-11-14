@@ -25,8 +25,10 @@ export async function getServerSideProps(context) {
 SwiperCore.use([FreeMode, Pagination]);
 
 export default function SpaceDetails({ data }) {
+  console.log(data)
   return (
     <div className="flex flex-col">
+    
       <Head>
         <title>PetSpace - Cariin Tempat Penitipan Hewan Buat Kamu</title>
         <link rel="icon" href="/petspace.png" />
@@ -45,6 +47,8 @@ export default function SpaceDetails({ data }) {
                   slidesPerView={1}
                   spaceBetween={0}
                   freeMode={false}
+                  pagination={true}
+                  navigation={true}
                   breakpoints={{
                     // when window width is >= 640px
                     350: {
@@ -84,6 +88,19 @@ export default function SpaceDetails({ data }) {
                       ></img>
                     </div>
                   </SwiperSlide>
+                  <SwiperSlide className="relative" style={{ zIndex: "-1" }}>
+                    <div className="flex flex-col">
+                      <div
+                        className="mt-7 mx-7"
+                        style={{ position: "absolute" }}
+                      ></div>
+                      <img
+                        src="/img.png"
+                        className=""
+                        style={{ height: "auto", width: "100%" }}
+                      ></img>
+                    </div>
+                  </SwiperSlide>
                 </Swiper>
               </div>
               {/* Main konten */}
@@ -95,7 +112,7 @@ export default function SpaceDetails({ data }) {
                   width: "100%",
                   borderRadius: "60px , 60px , 0px,0px",
                   position: "relative",
-                  top: "-20px",
+                  top: "-5px",
                   zIndex: "9",
                 }}
               >
@@ -191,11 +208,11 @@ export default function SpaceDetails({ data }) {
 
                   {/* button */}
                   <div>
-                    <Link href="request/1">
+                    <Link href={`request/${data.id_user_tempat_penitipan}`}>
                       <div className="w-full bg-blue h-lg cursor-pointer text-white border-2 border-blue-main rounded-md mt-12 hover:bg-white hover:text-blue-main hover:border-2 hover:border-blue-main duration-100">
                         <div className="content">
                           <p
-                            className="tracking-tight  text-lg font-semibold  text-center leading-3"
+                            className="tracking-tight text-lg font-semibold text-center leading-3"
                             style={{ lineHeight: "3" }}
                           >
                             Request Space

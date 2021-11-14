@@ -89,10 +89,12 @@ export default function InputSpace({token}) {
   }
 
   const okButtonHandler = (e) => {
-    location,href = "/petcare/account"
+    e.preventDefault()
+    location.href = "/petcare/account"
   };
 
   const failButtonHandler = (e) => {
+    e.preventDefault()
     document.getElementById("modal-failed").classList.add("hidden")
   }
 
@@ -308,7 +310,7 @@ export default function InputSpace({token}) {
                         </h3>
                         <div className="mt-2 px-7 py-3">
                           <p className="text-sm text-gray-500">
-                            Adding Space Succesfully!
+                            Adding Space succesfully!
                           </p>
                         </div>
                         <div className="items-center px-4 py-3">
@@ -353,7 +355,7 @@ export default function InputSpace({token}) {
                         </h3>
                         <div className="mt-2 px-7 py-3">
                           <p className="text-sm text-gray-500">
-                            Fail! 
+                            Adding Space failed! 
                           </p>
                         </div>
                         <div className="items-center px-4 py-3">
