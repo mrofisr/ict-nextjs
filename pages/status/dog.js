@@ -62,7 +62,9 @@ export default function Dog({ data }) {
                   </p>
                 </div>
 
-                <StatusCard user="user" pet="dog" petName="Doggy" personName="Lintang Pratama" dateIn="12 November 2021" dateOut="16 November 2021" status="Accepted" />
+                {data.map((transaction) => (
+                  <StatusCard user="user" pet="dog" petName={transaction.nama_hewan} personName={transaction.nama_penitip} dateIn={transaction.tanggal_penitipan.split("T")[0]} dateOut={transaction.tanggal_pengembalian.split("T")[0]} status={transaction.status_penitipan} phone={transaction.no_telp_tempat_penitipan} />
+                ))}
                 
                 <div className="h-24 w-full"></div>
               </div>

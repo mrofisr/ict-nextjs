@@ -87,7 +87,7 @@ export default function StatusCard(props) {
           </h2>
           <div className="text-sm md:text-base text-center font-serif text-white w-full my-6">
             <p>{props.personName}</p>
-            <p>{`${props.dateIn} - ${props.dateOut}`}</p>
+            <p>{`${props.dateIn} — ${props.dateOut}`}</p>
             <p>{`Status: ${props.status}`}</p>
           </div>
 

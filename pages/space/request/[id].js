@@ -71,11 +71,12 @@ export default function RequestSpace({ token }) {
   };
 
   const okButtonHandler = (e) => {
-    location.href =
-      inputField.jenis_hewan === "Anjing" ? "/status/dog" : "/status/cat";
+    e.preventDefault()
+    location.href = inputField.jenis_hewan === "Anjing" ? "/status/dog" : "/status/cat";
   };
 
   const failButtonHandler = (e) => {
+    e.preventDefault()
     document.getElementById("modal-failed").classList.add("hidden");
   };
 
@@ -299,7 +300,7 @@ export default function RequestSpace({ token }) {
 
                   <button
                     onClick={submitFormHandler}
-                    className="mt-4 px-4 py-4 bg-blue-main text-white font-medium w-full cursor-pointer border-2 border-blue-main rounded-lg "
+                    className="mt-4 px-4 py-4 bg-blue-main text-white hover:bg-white hover:text-blue-main duration-200 active:text-blue-main active:bg-white font-medium w-full cursor-pointer border-2 border-blue-main rounded-lg "
                   >
                     Verifikasi
                   </button>
