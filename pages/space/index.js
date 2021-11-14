@@ -41,11 +41,11 @@ export default function Space({ data }) {
   const filterHandler = (e) => {
     if (e.target.id === "cat") {
       setFilteredData(
-        allData.filter((space) => space.jenis_hewan === "Kucing")
+        allData.filter((space) => space.jenis_hewan.includes("Kucing"))
       );
     } else if (e.target.id === "dog") {
       setFilteredData(
-        allData.filter((space) => space.jenis_hewan === "Anjing")
+        allData.filter((space) => space.jenis_hewan.includes("Anjing"))
       );
     } else {
       setFilteredData(allData);
