@@ -66,6 +66,7 @@ export default function SpacePetCare({ res, token }) {
                         key={status.id_transaksi}
                         id={status.id_transaksi}
                         token={token}
+                        user="user_penitipan"
                         pet="dog"
                         petName={status.nama_hewan}
                         personName={status.nama_penitip}
@@ -80,6 +81,7 @@ export default function SpacePetCare({ res, token }) {
                         key={status.id_transaksi}
                         id={status.id_transaksi}
                         token={token}
+                        user="user_penitipan"
                         pet="cat"
                         petName={status.nama_hewan}
                         personName={status.nama_penitip}

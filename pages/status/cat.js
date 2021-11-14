@@ -63,7 +63,7 @@ export default function Cat({ data }) {
                 </div>
   
                 {data.map((transaction) => (
-                  <StatusCard user="user" pet="cat" petName={transaction.nama_hewan} personName={transaction.nama_penitip} dateIn={transaction.tanggal_penitipan.split("T")[0]} dateOut={transaction.tanggal_pengembalian.split("T")[0]} status={transaction.status_penitipan} phone={transaction.no_telp_tempat_penitipan} />
+                  <StatusCard user="user" pet="cat" petName={transaction.nama_hewan} personName={transaction.nama_pemilik_penitipan} dateIn={transaction.tanggal_penitipan.split("T")[0]} dateOut={transaction.tanggal_pengembalian.split("T")[0]} status={transaction.status_penitipan} phone={transaction.no_telp_tempat_penitipan} />
                 ))}
 
                 
