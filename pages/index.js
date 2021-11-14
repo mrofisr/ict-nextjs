@@ -20,9 +20,6 @@ export async function getServerSideProps(ctx) {
   );
   const spaceJakartaRes = await spaceJakarta.json();
 
-  console.log(spaceSemarangRes);
-  console.log(spaceJakartaRes);
-
   return {
     props: {
       semarang: spaceSemarangRes.data,
@@ -113,7 +110,7 @@ export default function Account({ semarang, jakarta }) {
                       Penitipan terdekat di Semarang
                     </p>
                   </div>
-                  <Link href={`space?search=Semarang`}>
+                  <Link href="space?city=semarang">
                     <div className="flex font-secondary mt-7 text-xs font-semibold hover:underline cursor-pointer text-blue-main">
                       View All
                     </div>
@@ -164,72 +161,6 @@ export default function Account({ semarang, jakarta }) {
                       </Link>
                     </SwiperSlide>
                   ))}
-                  {/* <SwiperSlide className="text-center bg-white shadow-md rounded-xl h-full border-2 cursor-pointer">
-                    <Link href="space/1">
-                      <div className="flex flex-col">
-                        <img
-                          src="/img.png"
-                          className="rounded-t-xl h-1/3"
-                          loading="lazy"
-                        ></img>
-                        <div className="flex flex-col text-left mx-2 my-3 h-2/3">
-                          <h3 className="text-blue-main font-medium text-base">
-                            Penitipan Hewan Cantika
-                          </h3>
-                          <h4 className="text-yellow-pet font-medium text-sm">
-                            Rp28.000/hari
-                          </h4>
-                          <p className="text-xs font-light text-gray-500 mt-1">
-                            Kota Semarang
-                          </p>
-                        </div>
-                      </div>
-                    </Link>
-                  </SwiperSlide>
-                  <SwiperSlide className="text-center bg-white shadow-md rounded-xl h-full border-2 cursor-pointer">
-                    <Link href="space/1">
-                      <div className="flex flex-col">
-                        <img
-                          src="/img.png"
-                          className="rounded-t-xl h-1/3"
-                          loading="lazy"
-                        ></img>
-                        <div className="flex flex-col text-left mx-2 my-3 h-2/3">
-                          <h3 className="text-blue-main font-medium text-base">
-                            Penitipan Hewan Cantika
-                          </h3>
-                          <h4 className="text-yellow-pet font-medium text-sm">
-                            Rp28.000/hari
-                          </h4>
-                          <p className="text-xs font-light text-gray-500 mt-1">
-                            Kota Semarang
-                          </p>
-                        </div>
-                      </div>
-                    </Link>
-                  </SwiperSlide>
-                  <SwiperSlide className="text-center bg-white shadow-md rounded-xl h-full border-2 cursor-pointer">
-                    <Link href="space/1">
-                      <div className="flex flex-col">
-                        <img
-                          src="/img.png"
-                          className="rounded-t-xl h-1/3"
-                          loading="lazy"
-                        ></img>
-                        <div className="flex flex-col text-left mx-2 my-3 h-2/3">
-                          <h3 className="text-blue-main font-medium text-base">
-                            Penitipan Hewan Cantika
-                          </h3>
-                          <h4 className="text-yellow-pet font-medium text-sm">
-                            Rp28.000/hari
-                          </h4>
-                          <p className="text-xs font-light text-gray-500 mt-1">
-                            Kota Semarang
-                          </p>
-                        </div>
-                      </div>
-                    </Link>
-                  </SwiperSlide> */}
                 </Swiper>
 
                 <div className="flex flex-row justify-between mt-9">
@@ -241,7 +172,7 @@ export default function Account({ semarang, jakarta }) {
                       Penitipan terdekat di Jakarta
                     </p>
                   </div>
-                  <Link href={`space?search=Jakarta`}>
+                  <Link href={`space?city=Jakarta`}>
                     <div className="flex font-secondary mt-7 text-xs font-semibold hover:underline cursor-pointer text-blue-main">
                       View All
                     </div>
@@ -292,73 +223,8 @@ export default function Account({ semarang, jakarta }) {
                       </Link>
                     </SwiperSlide>
                   ))}
-                  {/* <SwiperSlide className="text-center bg-white shadow-md rounded-xl h-full border-2 cursor-pointer">
-                    <Link href="space/1">
-                      <div className="flex flex-col">
-                        <img
-                          src="/img.png"
-                          className="rounded-t-xl h-1/3"
-                          loading="lazy"
-                        ></img>
-                        <div className="flex flex-col text-left mx-2 my-3 h-2/3">
-                          <h3 className="text-blue-main font-medium text-base">
-                            Abdur Rofi Maulidin
-                          </h3>
-                          <h4 className="text-yellow-pet font-medium text-sm">
-                            Rp28.000/hari
-                          </h4>
-                          <p className="text-xs font-light text-gray-500 mt-1">
-                            Kota Semarang
-                          </p>
-                        </div>
-                      </div>
-                    </Link>
-                  </SwiperSlide>
-                  <SwiperSlide className="text-center bg-white shadow-md rounded-xl h-full border-2 cursor-pointer">
-                    <Link href="space/1">
-                      <div className="flex flex-col">
-                        <img
-                          src="/img.png"
-                          className="rounded-t-xl h-1/3"
-                          loading="lazy"
-                        ></img>
-                        <div className="flex flex-col text-left mx-2 my-3 h-2/3">
-                          <h3 className="text-blue-main font-medium text-base">
-                            Abdur Rofi Maulidin
-                          </h3>
-                          <h4 className="text-yellow-pet font-medium text-sm">
-                            Rp28.000/hari
-                          </h4>
-                          <p className="text-xs font-light text-gray-500 mt-1">
-                            Kota Semarang
-                          </p>
-                        </div>
-                      </div>
-                    </Link>
-                  </SwiperSlide>
-                  <SwiperSlide className="text-center bg-white shadow-md rounded-xl h-full border-2 cursor-pointer">
-                    <Link href="space/1">
-                      <div className="flex flex-col">
-                        <img
-                          src="/img.png"
-                          className="rounded-t-xl h-1/3"
-                          loading="lazy"
-                        ></img>
-                        <div className="flex flex-col text-left mx-2 my-3 h-2/3">
-                          <h3 className="text-blue-main font-medium text-base">
-                            Abdur Rofi Maulidin
-                          </h3>
-                          <h4 className="text-yellow-pet font-medium text-sm">
-                            Rp28.000/hari
-                          </h4>
-                          <p className="text-xs font-light text-gray-500 mt-1">
-                            Kota Semarang
-                          </p>
-                        </div>
-                      </div>
-                    </Link>
-                  </SwiperSlide> */}
                 </Swiper>
+                
               </div>
             </div>
 

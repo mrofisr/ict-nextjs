@@ -17,7 +17,6 @@ export default function StatusCard(props) {
       }
     );
     const res = await req.json();
-    console.log(res);
     router.reload();
   };
 
@@ -32,8 +31,7 @@ export default function StatusCard(props) {
         }
       }
     );
-    const res = await req.json();
-    console.log(res);
+    const res = await req.json()
     router.reload();
   };
 
@@ -50,7 +48,7 @@ export default function StatusCard(props) {
             Ups!
           </h2>
           <div className="text-medium text-center font-serif text-black w-full mb-4">
-            <p>Data space masih kosong</p>
+            <p>{props.terms === "about" ? "Data masih belum ada." : "Data space belum ada."}</p>
           </div>
 
           <Link href="/space">

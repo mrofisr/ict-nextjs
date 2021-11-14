@@ -12,7 +12,7 @@ export async function getServerSideProps(ctx) {
   };
 }
 
-export default function Help({data}) {
+export default function Help({ data }) {
   return (
     <div className="flex flex-col">
       <Head>
@@ -52,6 +52,9 @@ export default function Help({data}) {
                     </div>
                   </div>
                 ))}
+                <div className="text-xs font-secondary text-center text-gray-500 mt-12">
+                  © 2021—Future Nine Dots Labs
+                </div>
 
                 <FloatingWA />
               </div>

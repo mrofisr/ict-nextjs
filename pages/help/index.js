@@ -52,6 +52,9 @@ export default function Help({ data }) {
                     </div>
                   </div>
                 ))}
+                <div className="text-xs font-secondary text-center text-gray-500 mt-12">
+                  © 2021—Future Nine Dots Labs
+                </div>
                 <FloatingWA />
               </div>
               <div className="w-full h-64"></div>

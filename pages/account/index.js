@@ -101,7 +101,7 @@ export default function Account({nama, email}) {
                     <hr />
                   </div>
                   {/* Button Icon Kontak Kami */}
-                  <a href="#">
+                  <Link href="/terms-and-conditions">
                     <div className="mt-3" style={{ display: "flex" }}>
                       <img src="/info.svg"></img>
                       <p
@@ -111,9 +111,9 @@ export default function Account({nama, email}) {
                         Syarat dan Ketentuan
                       </p>
                     </div>
-                  </a>
+                  </Link>
                   {/* Privacy policy */}
-                  <a href="#">
+                  <Link href="/privacy-policy">
                     <div className="mt-3" style={{ display: "flex" }}>
                       <img src="/privacy.svg"></img>
                       <p
@@ -123,8 +123,21 @@ export default function Account({nama, email}) {
                         Privacy Policy
                       </p>
                     </div>
-                  </a>
+                  </Link>
+                  {/* Tentang Kami */}
+                  <Link href="/about">
+                    <div className="mt-3" style={{ display: "flex" }}>
+                      <img className="text-gray-400" src="/username.svg"></img>
+                      <p
+                        className="mx-5 mt-1"
+                        style={{ color: "rgba(124, 124, 128, 0.8)" }}
+                      >
+                        Tentang Kami
+                      </p>
+                    </div>
+                  </Link>
                 </div>
+                
                 {/* Log out */}
                 <button className="w-full" onClick={logoutUser} href="account/login">
                   <div className=" w-full h-lg cursor-pointer text-white border-red-600 bg-red-600 border-2 rounded-md mt-10 transition-all duration-300 hover:border-red-600 hover:bg-white hover:text-red-600">

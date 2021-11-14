@@ -154,16 +154,15 @@ export default function AccountPetcare({token, user, id}) {
                 </div>
 
                 {/* Kontak Kami */}
-                <div className="setting-box mt-5">
+                <div className="setting-box mt-8">
                   <h4 className="text-lg tracking-tight font-medium text-gray-900">
                     Kontak Kami
                   </h4>
                   <div className="mt-2">
                     <hr />
                   </div>
-
                   {/* Button Icon Kontak Kami */}
-                  <a href="#">
+                  <Link href="/terms-and-conditions">
                     <div className="mt-3" style={{ display: "flex" }}>
                       <img src="/info.svg"></img>
                       <p
@@ -173,9 +172,9 @@ export default function AccountPetcare({token, user, id}) {
                         Syarat dan Ketentuan
                       </p>
                     </div>
-                  </a>
+                  </Link>
                   {/* Privacy policy */}
-                  <a href="#">
+                  <Link href="/privacy-policy">
                     <div className="mt-3" style={{ display: "flex" }}>
                       <img src="/privacy.svg"></img>
                       <p
@@ -185,7 +184,19 @@ export default function AccountPetcare({token, user, id}) {
                         Privacy Policy
                       </p>
                     </div>
-                  </a>
+                  </Link>
+                  {/* Tentang Kami */}
+                  <Link href="/about">
+                    <div className="mt-3" style={{ display: "flex" }}>
+                      <img className="text-gray-400" src="/username.svg"></img>
+                      <p
+                        className="mx-5 mt-1"
+                        style={{ color: "rgba(124, 124, 128, 0.8)" }}
+                      >
+                        Tentang Kami
+                      </p>
+                    </div>
+                  </Link>
                 </div>
 
                 {/* Log out */}
