@@ -38,8 +38,8 @@ export default function SignUp() {
     alamat: "",
     tanggal_lahir: "",
     jenis_kelamin: "",
-    foto_wajah: "",
-    foto_wajah_ktp: "",
+    // foto_wajah: "",
+    // foto_wajah_ktp: "",
     no_hp: "",
   });
 
@@ -375,7 +375,7 @@ export default function SignUp() {
                   </div>
 
                   {/* Upload foto wajah */}
-                  <label className="w-full mt-5 flex flex-col items-center bg-background bg-opacity-40 px-4 py-6 rounded-md tracking-wide border border-blue-secondary cursor-pointer hover:bg-blue-main hover:text-white  ease-linear transition-all duration-150">
+                  {/* <label className="w-full mt-5 flex flex-col items-center bg-background bg-opacity-40 px-4 py-6 rounded-md tracking-wide border border-blue-secondary cursor-pointer hover:bg-blue-main hover:text-white  ease-linear transition-all duration-150">
                     <i className="fas fa-camera fa-2x"></i>
                     <span className="mt-1 text-xs leading-normal">
                       Foto Wajah
@@ -389,10 +389,10 @@ export default function SignUp() {
                       onChange={inputImageHandler}
                       required
                     />
-                  </label>
+                  </label> */}
 
                   {/* Upload foto ktp */}
-                  <label className="w-full mt-5 flex flex-col items-center bg-background bg-opacity-40 px-4 py-6 rounded-md tracking-wide border border-blue-secondary cursor-pointer hover:bg-blue-main hover:text-white  ease-linear transition-all duration-150">
+                  {/* <label className="w-full mt-5 flex flex-col items-center bg-background bg-opacity-40 px-4 py-6 rounded-md tracking-wide border border-blue-secondary cursor-pointer hover:bg-blue-main hover:text-white  ease-linear transition-all duration-150">
                     <i className="fas fa-camera fa-2x"></i>
                     <span className="mt-1 text-xs leading-normal">
                       Foto KTP
@@ -406,7 +406,7 @@ export default function SignUp() {
                       onChange={inputImageHandler}
                       required
                     />
-                  </label>
+                  </label> */}
 
                   <div
                     id="modal-acc"

@@ -25,7 +25,7 @@ export default async function handler(req, res) {
 			message: "Must be send request query",
 		});
 
-	const { fields, files } = await getRequest(req, "./public/user");
+	const { fields } = await getRequest(req, "./public/user");
 	const {
 		email,
 		password,
@@ -36,7 +36,7 @@ export default async function handler(req, res) {
 		nama,
 		no_hp,
 	} = fields;
-	const { foto_wajah, foto_wajah_ktp } = files;
+	// const { foto_wajah, foto_wajah_ktp } = files;
 	if (
 		!no_hp ||
 		!email ||
@@ -45,8 +45,8 @@ export default async function handler(req, res) {
 		!alamat ||
 		!tanggal_lahir ||
 		!jenis_kelamin ||
-		!foto_wajah ||
-		!foto_wajah_ktp ||
+		// !foto_wajah ||
+		// !foto_wajah_ktp ||
 		!nama
 	)
 		return res.status(400).json({
@@ -85,10 +85,10 @@ export default async function handler(req, res) {
 								no_ktp: nik,
 								alamat: alamat,
 								tanggal_lahir: `${tanggal_lahir}T14:21:00+02:00`,
-								url_foto_selfie_ktp: foto_wajah_ktp.path,
+								url_foto_selfie_ktp: " ",
 								status_akun: "terverifikasi",
 								jenis_kelamin: jenis_kelamin,
-								url_foto_wajah: foto_wajah.path,
+								url_foto_wajah: " ",
 							},
 						],
 					},

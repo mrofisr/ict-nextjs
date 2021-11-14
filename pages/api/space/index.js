@@ -32,16 +32,16 @@ export default async function handler(req, res) {
 			const auth = await authApi(req, res, "user_penitipan");
 			const { fields, files } = await getRequest(req, "./public/space");
 			const { nama_penitipan, alamat, kota, harga, deskripsi, jenis_hewan } = fields;
-			const { foto_1, foto_2, foto_3 } = files;
+			// const { foto_1, foto_2, foto_3 } = files;
 			if (
 				!nama_penitipan ||
 				!alamat ||
 				!kota ||
 				!harga ||
 				!deskripsi ||
-				!foto_1 ||
-				!foto_2 ||
-				!foto_3 ||
+				// !foto_1 ||
+				// !foto_2 ||
+				// !foto_3 ||
 				!jenis_hewan
 			)
 				return res.status(400).json({
@@ -62,7 +62,7 @@ export default async function handler(req, res) {
 					kota: kota,
 					harga: harga,
 					deskripsi: deskripsi,
-					foto_tempat_penitipan: `${foto_1.path},${foto_2.path},${foto_3.path}`,
+					foto_tempat_penitipan: " ",
 					jenis_hewan: jenis_hewan
 				},
 			});

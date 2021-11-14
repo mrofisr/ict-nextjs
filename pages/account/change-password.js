@@ -20,7 +20,7 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default function ChangePasswordPetCare({ token}) {
+export default function ChangePasswordPetCare({ token }) {
   const [inputField, setInputField] = useState({
     password: "",
     new_password: "",
@@ -40,7 +40,7 @@ export default function ChangePasswordPetCare({ token}) {
     e.preventDefault();
 
     const req = await fetch(
-      "https://petspace.vercel.app/api/user/auth/change-password",
+      "http://localhost:3000/api/user/auth/change-password",
       {
         method: "PUT",
         headers: {
