@@ -2,13 +2,14 @@ import Head from "@/components/Head";
 import Bar from "@/components/Bar";
 import FloatingWA from "@/components/FloatingWA";
 
-export async function getServerSideProps(ctx) {
+export async function getStaticProps() {
   const getFaq = await fetch("https://petspace.vercel.app/api/admin/faq");
   const getFaqRes = await getFaq.json();
   return {
     props: {
       data: getFaqRes.data,
     },
+    revalidate: 10
   };
 }
 
