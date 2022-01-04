@@ -3,25 +3,9 @@ import Head from "@/components/Head";
 import Bar from "@/components/Bar";
 import Search from "@/components/Search";
 import StatusCard from "@/components/StatusCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export async function getServerSideProps(context) {
-  if (context.query.city) {
-    const { city } = context.query;
-    console.log(city);
-    const req = await fetch(
-      "https://petspace.vercel.app/api/space/by-city?city=" + city
-    );
-    const { data } = await req.json();
-    console.log(data);
-
-    return {
-      props: {
-        data,
-      },
-    };
-  }
-
+export async function getStaticProps() {
   const req = await fetch("https://petspace.vercel.app/api/space");
   const res = await req.json();
   
@@ -29,14 +13,24 @@ export async function getServerSideProps(context) {
     props: {
       data: res.data,
     },
+    revalidate: 10
   };
 }
 
 export default function Space({ data }) {
   const [allData, setAllData] = useState(data);
-  const [filteredData, setFilteredData] = useState(allData);
-  console.log(allData);
-  console.log(filteredData);
+  const [filteredData, setFilteredData] = useState(data);
+
+  useEffect(async() => {
+    const params = window.location.search
+    if (params) {
+      const [key, value] = params.split("=")
+      const req = await fetch("/api/space/by-city?city=" + value)
+      const res = await req.json();
+      setAllData(res.data)
+      setFilteredData(res.data)
+    }
+  },[])
 
   const filterHandler = (e) => {
     if (e.target.id === "cat") {
@@ -50,8 +44,6 @@ export default function Space({ data }) {
     } else {
       setFilteredData(allData);
     }
-
-    console.log(filteredData);
   };
 
   return (
