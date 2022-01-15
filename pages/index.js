@@ -9,7 +9,7 @@ import "swiper/css/pagination";
 
 SwiperCore.use([FreeMode, Pagination]);
 
-export async function getServerSideProps(ctx) {
+export async function getStaticProps() {
   const spaceSemarang = await fetch(
     "https://petspace.vercel.app/api/space/by-city?city=semarang"
   );
@@ -25,6 +25,7 @@ export async function getServerSideProps(ctx) {
       semarang: spaceSemarangRes.data,
       jakarta: spaceJakartaRes.data,
     },
+    revalidate: 10
   };
 }
 

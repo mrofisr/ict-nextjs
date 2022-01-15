@@ -24,6 +24,7 @@ export default async function handler(req, res) {
 			harga: true,
 			kota: true,
 			foto_tempat_penitipan: true,
+			jenis_hewan: true
 		},
 	});
 	res.status(200).json({
